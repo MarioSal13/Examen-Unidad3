@@ -3,10 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detalle Serie</title>
     <link rel="stylesheet" href="../style/DetailSerie.css">
 </head>
 <body>
-    
+    <div id="app">
+
+        <div v-if="selectedSeries">
+            <h2>Detalles de la serie</h2>
+            <img :src="'https://image.tmdb.org/t/p/w500' + selectedSeries.poster_path" :style="{ width: '200px' }">
+            <p><strong>Título:</strong>{{ selectedSeries.name }}</p>
+            <p><strong>Fecha de estreno:</strong>{{ selectedSeries.first_air_date }}</p>
+            <p><strong>Descripción:</strong>{{ selectedSeries.overview }}</p>
+            <p><strong>Categorias:</strong>{{ selectedSeries.genres.map(genre => genre.name).join(', ') }}</p>
+            
+            <!-- Rating -->
+            <p><strong>Calificacion media:</strong> {{ selectedSeries.vote_average.toFixed(1) }} </p>
+            <p v-if="userRating !==0"><strong>Tu Calificacion:</strong></p>
+            <input type="number" v-model="rating" min="1" max="10">
+            <button @click="rateSeries">Enviar Rating</button>
+            <button v-if="userRating !== 0" @click="deleteRating">Eliminar Rating</button>
+
+            <!-- add to favorite -->
+            <button @click="toggleFavorite">{{ isFavorite ? 'Eliminar de favoritos' : 'Añadir a Favoritos' }}</button>
+
+            <!-- actors -->
+            <h3>Reparto</h3>
+            <ul>
+                <li v-for="actor in cast" :key="actor.cast_id">{{ actor.name }} como {{ actor.character}}</li>
+            </ul>
+
+            <!-- keywords -->
+            <h3>Palabras clave</h3>
+            <ul>
+                <li v-for="keyword in keywords" :key="keyword.id">{{ keyword.name }}</li>
+            </ul>
+
+            <!-- Trailer -->
+            <h3>Trailer</h3>
+            <div v-if="Trailer">
+               <iframe :src="'https://www.youtube.com/embed/' + trailer" width="560" height="315"frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="recommendations">
+                <div v-for="recommendation in recommendations" :key="recommendation.id" class="recommendation-card" @click="getSeriesDetails(recommendation.id)">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + recommendation.poster_path">
+                    <p>{{ recommendation.name }}</p>
+                </div>
+            </div>
+
+            <!-- Seasons -->
+            <h3>Temporadas</h3>
+            <ul>
+                <li> v-for="season in selectedSeries.seasons" :key="season.id"</li>
+                    <p><strong>Temporada {{ season.season_number }}:</strong> {{ season.episode_count }} episodios</p>
+            </ul>
+
+            <button class="back-button" @click="selectedSeries = null">Regresar</button>
+        </div>
+    </div>
 </body>
 </html>
