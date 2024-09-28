@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="style/loginStyle.css">
+
+</head>
+<body>
+    <div id="app">
+        <form v-if="!isLoggedIn" @submit.prevent="onSubmit">
+            <label for="correo">Usuario:</label>
+            <input type="text" id="userName" name="userName" v-model="userName" required>
+
+            <label for="pass">Contraseña:</label>
+            <input type="password" id="pass" name="pass" v-model="passw" required>
+
+            <button type="submit">Acceder</button>
+        </form>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+        createApp({
+            setup() {
+                var userName = ref('');
+                var passw = ref('');
+                var isLoggedIn = ref(false);
+
+                return {
+                    userName,
+                    passw,
+                    isLoggedIn
+                };
+            },
+            methods: {
+                async onSubmit() {
+                    try {
+                        const url = 'https://api.themoviedb.org/3/authentication/token/validate_with_login';
+                        const requestToken = 'a06d5ea0e2ffdd599f68d71b50846b402272c5cf';
+
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNTU2OTBkZjg3ZGQ4YjQ1ZmQ0OGM2MjEzNzgzMjAxMiIsIm5iZiI6MTcyNzI1ODY2NS4yNzgyOTksInN1YiI6IjY2ZjJmNmRjMDIyMDhjNjdjODhkOWJjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RYJ10-56maf3WKvBtfBuKdNw3adiiScbvIbt_7lNx7c',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                username: this.userName,
+                                password: this.passw,
+                                request_token: requestToken
+                            })
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Error en la autenticación: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            this.isLoggedIn = true;
+                            sessionStorage.setItem('Usuario', JSON.stringify({ nombre: this.userName }));
+                            this.showNotification("Bienvenido", "Has iniciado sesión correctamente");
+                            window.location.href = '/home.html';
+                        } else {
+                            console.log("Credenciales inválidas.");
+                        }
+                    } catch (error) {
+                        console.error(error.message);
+                    }
+                },
+                showNotification(title, message) {
+                    alert(`${title}: ${message}`);
+                }
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+</html>
