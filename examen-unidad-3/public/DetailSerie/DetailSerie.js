@@ -2,7 +2,8 @@ import { createApp, ref, onMounted } from 'https://unpkg.com/vue@3.2.47/dist/vue
 
 createApp({
     setup() {
-        const selectedSeries = ref(null);
+        const API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmI1MzM2MWZhYTMyMzYxNDM5MjQ5ODU0YTY3YTE5NyIsIm5iZiI6MTcyNzU5NDkxMy43Njc4MjIsInN1YiI6IjY2ZjJmNWM0MDIyMDhjNjdjODhkOWFjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.evddOiHWvAWL_YSSJ2RnBHT_JKsK8tLUHpj2MnXJEVE';
+        const selectedSeries = ref({});
         const rating = ref(5);
         const userRating = ref(0);
         const sessionId = ref(null);
@@ -12,16 +13,20 @@ createApp({
         const trailer = ref(null);
         const recommendations = ref([]);
 
-        // obtains details serie
+        // Obtains details of the series
         const getSeriesDetails = (seriesId) => {
-            fetch(`https://api.themoviedb.org/3/tv/${seriesId}?api_key=${process.env.VUE_APP_API_KEY}&append_to_response=credits,videos,keywords,recommendations`)
+            fetch(`https://api.themoviedb.org/3/tv/${seriesId}?append_to_response=credits,videos,keywords,recommendations`, {
+                headers: {
+                    'Authorization': `Bearer ${API_KEY}` // Usar el token de acceso V4
+                }
+            })
             .then(res => res.json())
-            .then(data =>{
+            .then(data => {
                 selectedSeries.value = data;
-                cast.value = data.credits.cast.slice(0,10);
-                keywords.value = data.keywords.results;
-                trailer.value = data.videos.results.find(video => video.type === 'trailer')?.key;
-                recommendations.value = data.recommendations.results;
+                cast.value = data.credits?.cast?.slice(0, 10) || [];
+                keywords.value = data.keywords?.results || [];
+                trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
+                recommendations.value = data.recommendations?.results || [];
             })
             .catch(error => console.log('Error al obtener datos', error));
         };
@@ -29,9 +34,10 @@ createApp({
         // Add/Delete favorites
         const toggleFavorite = () => {
             const method = isFavorite.value ? 'DELETE' : 'POST';
-            fetch(`https://api.themoviedb.org/3/account/{account_id}/favorite?api_key=${process.env.VUE_APP_API_KEY}&session_id=${sessionId.value}`,{
+            fetch(`https://api.themoviedb.org/3/account/{account_id}/favorite?session_id=${sessionId.value}`, {
                 method,
                 headers: {
+                    'Authorization': `Bearer ${API_KEY}`,
                     'Content-type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -41,20 +47,21 @@ createApp({
                 })
             })
             .then(res => res.json())
-            .then(() =>{
+            .then(() => {
                 isFavorite.value = !isFavorite.value;
             })
             .catch(error => console.log('Error al cambiar favorito: ', error));
         };
 
-        // rate series
+        // Rate series
         const rateSeries = () => {
-            fetch(`https://api.themoviedb.org/3/tv/${selectedSeries.value.id}/rating?api_key=${process.env.VUE_APP_API_KEY}&session_id=${sessionId.value}`,{
+            fetch(`https://api.themoviedb.org/3/tv/${selectedSeries.value.id}/rating?session_id=${sessionId.value}`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${API_KEY}`,
                     'Content-Type': 'application/json'
                 },
-                body:JSON.stringify({
+                body: JSON.stringify({
                     value: rating.value
                 })
             })
@@ -65,25 +72,37 @@ createApp({
             .catch(error => console.log('Error al enviar rating', error));
         };
 
-        // delete rate
+        // Delete rating
         const deleteRating = () => {
-            fetch(`https://api.themoviedb.org/3/tv/${selectedSeries.value.id}/rating?api_key=${process.env.VUE_APP_API_KEY}&session_id=${sessionId.value}`, {
-                method: 'DELETE'
+            fetch(`https://api.themoviedb.org/3/tv/${selectedSeries.value.id}/rating?session_id=${sessionId.value}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${API_KEY}`
+                }
             })
-            .then(res =>{
-                if(res.ok) {
+            .then(res => {
+                if (res.ok) {
                     userRating.value = 0;
                 }
             })
-            .catch(error => console.log('Error al eleiminar rating:', error));
+            .catch(error => console.log('Error al eliminar rating:', error));
         };
 
         // On mount
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
             const seriesId = urlParams.get('id');
-            if(seriesId) {
+
+            console.log('URL completa:', window.location.href);
+            console.log('Parámetros de URL:', window.location.search);
+            console.log('ID extraído:', seriesId);
+
+            if (seriesId) {
                 getSeriesDetails(seriesId);
+                console.log('data', selectedSeries.value);
+                console.log('el id es' + seriesId);
+            } else {
+                console.error('No se encontró el id de la serie en URL');
             }
         });
 
@@ -100,6 +119,6 @@ createApp({
             toggleFavorite,
             rateSeries,
             deleteRating
-        }
+        };
     }
-}).mount('app');
+}).mount('#app');
