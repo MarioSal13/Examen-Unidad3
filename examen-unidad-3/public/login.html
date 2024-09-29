@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
     <link rel="stylesheet" href="style/loginStyle.css">
-
 </head>
 <body>
     <div id="app">
         <form v-if="!isLoggedIn" @submit.prevent="onSubmit">
-            <label for="correo">Usuario:</label>
+            <label for="userName">Usuario:</label>
             <input type="text" id="userName" name="userName" v-model="userName" required>
 
             <label for="pass">Contraseña:</label>
@@ -23,6 +22,9 @@
 
     <script>
         const { createApp, ref, onMounted } = Vue;
+
+        const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNTU2OTBkZjg3ZGQ4YjQ1ZmQ0OGM2MjEzNzgzMjAxMiIsIm5iZiI6MTcyNzU3NTA0Mi4zMDg0NDYsInN1YiI6IjY2ZjJmNmRjMDIyMDhjNjdjODhkOWJjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AeGm_NWqjLKptJznk1e5rGNSPdNkaxJZB6EBkPYB_Mc";
+
         createApp({
             setup() {
                 var userName = ref('');
@@ -46,13 +48,27 @@
             methods: {
                 async onSubmit() {
                     try {
-                        const url = 'https://api.themoviedb.org/3/authentication/token/validate_with_login';
-                        const requestToken = 'a06d5ea0e2ffdd599f68d71b50846b402272c5cf';
+                        const tokenUrl = 'https://api.themoviedb.org/3/authentication/token/new';
+                        const tokenResponse = await fetch(tokenUrl, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${API_KEY}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
 
-                        const response = await fetch(url, {
+                        if (!tokenResponse.ok) {
+                            throw new Error(`Error al generar el token: ${tokenResponse.status}`);
+                        }
+
+                        const tokenData = await tokenResponse.json();
+                        const requestToken = tokenData.request_token;
+
+                        const loginUrl = 'https://api.themoviedb.org/3/authentication/token/validate_with_login';
+                        const loginResponse = await fetch(loginUrl, {
                             method: 'POST',
                             headers: {
-                                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNTU2OTBkZjg3ZGQ4YjQ1ZmQ0OGM2MjEzNzgzMjAxMiIsIm5iZiI6MTcyNzI1ODY2NS4yNzgyOTksInN1YiI6IjY2ZjJmNmRjMDIyMDhjNjdjODhkOWJjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RYJ10-56maf3WKvBtfBuKdNw3adiiScbvIbt_7lNx7c',
+                                'Authorization': `Bearer ${API_KEY}`, 
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
@@ -62,15 +78,19 @@
                             })
                         });
 
-                        if (!response.ok) {
-                            throw new Error(`Error en la autenticación: ${response.status}`);
+                        if (!loginResponse.ok) {
+                            throw new Error(`Error en la autenticación: ${loginResponse.status}`);
                         }
 
-                        const result = await response.json();
+                        const loginResult = await loginResponse.json();
 
-                        if (result.success) {
+                        if (loginResult.success) {
                             this.isLoggedIn = true;
-                            sessionStorage.setItem('Usuario', JSON.stringify({ nombre: this.userName }));
+                            // Guardar usuario y token en sessionStorage
+                            sessionStorage.setItem('Usuario', JSON.stringify({
+                                nombre: this.userName,
+                                token: requestToken
+                            }));
                             this.showNotification("Bienvenido", "Has iniciado sesión correctamente");
                             window.location.href = '/home.html';
                         } else {
@@ -86,6 +106,6 @@
             }
         }).mount('#app');
     </script>
-
 </body>
 </html>
+
