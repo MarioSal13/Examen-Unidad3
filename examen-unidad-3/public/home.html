@@ -14,7 +14,6 @@
             <button @click="estado=1"> Series </button>
         </div>
 
-
         <div v-if="estado==0">
             <h1>Tendencias</h1>
             <div class="movies">
@@ -54,14 +53,11 @@
                 </div>
             </div>
         </div>
-
         <div v-if="estado==1">
                 <h1>Tendencias</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in serie" :key="movie.id">
-                        <a :href="'DetailSerie.html?id=' + movie.id">
-                            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-                        </a>
+                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
                         <h4>{{ movie.name }}</h4>
                     </div>
                 </div>
@@ -69,9 +65,7 @@
                 <h1>Populares</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesPopular" :key="movie.id">
-                        <a :href="'DetailSerie.html?id=' + movie.id">
-                            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
-                        </a>
+                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
                         <h4>{{ movie.name }}</h4>
                     </div>
                 </div>
@@ -128,6 +122,7 @@
                 const estado = ref(0);
 
                 onMounted(() => {
+                    checkSession();
                     fetchMovies();
                     fetchMoviesPopulares();
                     fetchMoviesMejorPunt();
@@ -138,6 +133,13 @@
                     fetchSeriePopular();
                     fetchSerieRaqued();
                 });
+
+                const checkSession = () => {
+                    const session = sessionStorage.getItem('Usuario');
+                    if (!session) {
+                        window.location.href = 'login.html';
+                    }
+                };
 
                 const fetchMovies = async () => {
                     try {
@@ -271,7 +273,6 @@
                     }
                 };
 
-
                 const fetchSerieAire = async () => {
                     try {
                         const myHeaders = new Headers();
@@ -338,6 +339,11 @@
                     }
                 };
 
+                const irSerie = (movie) =>{
+                    console.log("me gusta la mama del pedro");
+                    window.location.href = 'DetailSerie/DetailSerie.html?id=${movie.id}';
+                }
+
                 return {
                     movies,
                     moviesPopulares,
@@ -348,9 +354,11 @@
                     seriesAire,
                     seriesPopular,
                     seriesMejorRaqueda,
-                    estado
+                    estado,
+                    irSerie
                 };
-            }
+            },
+
         }).mount('#app');
     </script>
 </body>

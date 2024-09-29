@@ -29,6 +29,14 @@
                 var passw = ref('');
                 var isLoggedIn = ref(false);
 
+                onMounted(() => {
+                    const userSession = sessionStorage.getItem('Usuario');
+                    if (userSession) {
+                        isLoggedIn.value = true;
+                        window.location.href = '/home.html';
+                    }
+                });
+
                 return {
                     userName,
                     passw,
