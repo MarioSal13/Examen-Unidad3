@@ -78,6 +78,15 @@ createApp({
             .catch(error => console.log('Error al eleiminar rating:', error));
         };
 
+        // On mount
+        onMounted(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const seriesId = urlParams.get('id');
+            if(seriesId) {
+                getSeriesDetails(seriesId);
+            }
+        });
+
         return {
             selectedSeries,
             rating,
