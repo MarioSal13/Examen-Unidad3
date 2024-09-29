@@ -59,7 +59,7 @@
                 <h1>Tendencias</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in serie" :key="movie.id">
-                        <a href="">
+                        <a :href="'DetailSerie.html?id=' + movie.id">
                             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
                         </a>
                         <h4>{{ movie.name }}</h4>
@@ -69,7 +69,7 @@
                 <h1>Populares</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesPopular" :key="movie.id">
-                        <a href="">
+                        <a :href="'DetailSerie.html?id=' + movie.id">
                             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
                         </a>
                         <h4>{{ movie.name }}</h4>
@@ -79,7 +79,7 @@
                 <h1>Al Aire Hoy</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesAireHoy" :key="movie.id">
-                        <a href="">
+                        <a :href="'DetailSerie.html?id=' + movie.id">
                             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
                         </a>
                         <h4>{{ movie.name }}</h4>
@@ -89,7 +89,7 @@
                 <h1>Al Aire Ahora</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesAire" :key="movie.id">
-                        <a href="">
+                        <a :href="'DetailSerie.html?id=' + movie.id">
                             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
                         </a>
                         <h4>{{ movie.name }}</h4>
@@ -99,7 +99,7 @@
                 <h1>Mejor Valoradas</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesMejorRaqueda" :key="movie.id">
-                        <a href="">
+                        <a :href="'DetailSerie.html?id=' + movie.id">
                             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title">
                         </a>
                         <h4>{{ movie.name }}</h4>
