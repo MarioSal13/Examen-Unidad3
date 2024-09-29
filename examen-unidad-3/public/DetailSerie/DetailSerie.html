@@ -5,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle Serie</title>
     <link rel="stylesheet" href="../style/DetailSerie.css">
+    <script type="module" src="DetailSerie.js" defer></script>
 </head>
 <body>
     <div id="app">
-
-        <div v-if="selectedSeries">
+        <div>
             <h2>Detalles de la serie</h2>
-            <img :src="'https://image.tmdb.org/t/p/w500' + selectedSeries.poster_path" :style="{ width: '200px' }">
+            <img v-if="selectedSeries.poster_path" :src="'https://image.tmdb.org/t/p/w500' + selectedSeries.poster_path" :style="{ width: '200px' }">
             <p><strong>Título:</strong>{{ selectedSeries.name }}</p>
             <p><strong>Fecha de estreno:</strong>{{ selectedSeries.first_air_date }}</p>
             <p><strong>Descripción:</strong>{{ selectedSeries.overview }}</p>
-            <p><strong>Categorias:</strong>{{ selectedSeries.genres.map(genre => genre.name).join(', ') }}</p>
-            
+
+            <p v-if="selectedSeries.genres && selectedSeries.genres.length">
+                <strong>Categorias:</strong>{{ selectedSeries.genres.map(genre => genre.name).join(', ') }}
+            </p>
+
             <!-- Rating -->
-            <p><strong>Calificacion media:</strong> {{ selectedSeries.vote_average.toFixed(1) }} </p>
+            <p v-if="selectedSeries.vote_average !== undefined">
+                <strong>Calificacion media:</strong> {{ selectedSeries.vote_average.toFixed(1) }}
+            </p>
             <p v-if="userRating !==0"><strong>Tu Calificacion:</strong></p>
             <input type="number" v-model="rating" min="1" max="10">
             <button @click="rateSeries">Enviar Rating</button>
@@ -61,10 +66,8 @@
                 </li>
             </ul>
 
-            <button class="back-button" @click="selectedSeries = null" href="../home.html">Regresar</button>
+            <button class="back-button" @click="goBack">Regresar</button>
         </div>
     </div>
-
-    <script type="module" src="DetailSerie.js"></script>
 </body>
 </html>

@@ -88,6 +88,11 @@ createApp({
             .catch(error => console.log('Error al eliminar rating:', error));
         };
 
+        // back to home
+        const goBack = () => {
+            window.location.href = '../home.hmtl';
+        }
+
         // On mount
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -118,7 +123,8 @@ createApp({
             getSeriesDetails,
             toggleFavorite,
             rateSeries,
-            deleteRating
+            deleteRating,
+            goBack
         };
     }
 }).mount('#app');
