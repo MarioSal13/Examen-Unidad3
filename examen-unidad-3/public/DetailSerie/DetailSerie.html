@@ -61,7 +61,7 @@
             <!-- Seasons -->
             <h3>Temporadas</h3>
             <ul>
-                <li v-for="season in selectedSeries.seasons" :key="season.id">
+                <li v-for="season in selectedSeries.seasons" :key="season.id" @click="redirectSeasonDetail(season.season_number)">
                     <p><strong>Temporada {{ season.season_number }}:</strong> {{ season.episode_count }} episodios</p>
                 </li>
             </ul>

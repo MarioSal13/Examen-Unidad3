@@ -93,6 +93,14 @@ createApp({
             window.location.href = '../home.hmtl';
         }
 
+        // redirect to SeasonDetail
+        const redirectSeasonDetail = (seasonNumber) => {
+            const seriesId = selectedSeries.value.id;
+            if (seriesId && seasonNumber) {
+                window.location.href = `../DetailSeason/DetailSeason.html?seriesId=${seriesId}&seasonNumber=${seasonNumber}`;
+            }
+        }
+
         // On mount
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -124,7 +132,8 @@ createApp({
             toggleFavorite,
             rateSeries,
             deleteRating,
-            goBack
+            goBack,
+            redirectSeasonDetail
         };
     }
 }).mount('#app');
