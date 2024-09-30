@@ -73,9 +73,7 @@
                 <h1>Al Aire Hoy</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesAireHoy" :key="movie.id">
-                        <a :href="'DetailSerie.html?id=' + movie.id">
-                            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        </a>
+                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
                         <h4>{{ movie.name }}</h4>
                     </div>
                 </div>
@@ -83,9 +81,7 @@
                 <h1>Al Aire Ahora</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesAire" :key="movie.id">
-                        <a :href="'DetailSerie.html?id=' + movie.id">
-                            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        </a>
+                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
                         <h4>{{ movie.name }}</h4>
                     </div>
                 </div>
@@ -93,9 +89,7 @@
                 <h1>Mejor Valoradas</h1>
                 <div class="movies">
                     <div class="movie" v-for="movie in seriesMejorRaqueda" :key="movie.id">
-                        <a :href="'DetailSerie.html?id=' + movie.id">
                             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        </a>
                         <h4>{{ movie.name }}</h4>
                     </div>
                 </div>
