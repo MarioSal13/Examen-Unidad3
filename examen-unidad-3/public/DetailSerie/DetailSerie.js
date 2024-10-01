@@ -13,6 +13,7 @@ createApp({
         const keywords = ref([]);
         const trailer = ref(null);
         const recommendations = ref([]);
+        const showFullCast = ref(false);
 
         // Obtains details of the series
         const getSeriesDetails = (seriesId) => {
@@ -24,7 +25,7 @@ createApp({
             .then(res => res.json())
             .then(data => {
                 selectedSeries.value = data;
-                cast.value = data.credits?.cast?.slice(0, 10) || [];
+                cast.value = data.credits?.cast || [];
                 keywords.value = data.keywords?.results || [];
                 trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
                 recommendations.value = data.recommendations?.results || [];
@@ -67,6 +68,11 @@ createApp({
                 isFavorite.value = !isFavorite.value;
             })
             .catch(error => console.log('Error al cambiar favorito: ', error));
+        };
+
+        // show all actors
+        const toggleShowCast = () => {
+            showFullCast.value = !showFullCast.value;
         };
 
         // Rate series
@@ -136,12 +142,14 @@ createApp({
             keywords,
             trailer,
             recommendations,
+            showFullCast,
             getSeriesDetails,
             getSeasonDetails,
             toggleFavorite,
             rateSeries,
             deleteRating,
-            redirectSeasonDetail
+            redirectSeasonDetail,
+            toggleShowCast
         };
     }
 }).mount('#app');

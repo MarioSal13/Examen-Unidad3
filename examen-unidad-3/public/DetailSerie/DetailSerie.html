@@ -39,14 +39,14 @@
 
         <div class="cast" v-if="cast.length">
             <h2>Reparto de la serie</h2>
-            <div class="actors movies"> <!-- Se mantiene la clase movies para scroll horizontal -->
-                <div v-for="(actor, index) in cast.slice(0, 10)" :key="actor.id" class="actor movie"> <!-- Asegúrate de utilizar actor movie -->
-                    <img :src="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="Foto del actor">
-                    <p><strong>{{ actor.name }}</strong> how to <strong>{{ actor.character }}</strong></p>
+            <div class="actors movies">
+                <div v-for="(actor, index) in showFullCast ? cast : cast.slice(0, 10)" :key="actor.id" class="actor movie">
+                    <img :src="actor.profile_path ? 'https://image.tmdb.org/t/p/w500' + actor.profile_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" alt="Foto del actor">
+                    <p><strong>{{ actor.name }}</strong> as <strong>{{ actor.character }}</strong></p>
                 </div>
             </div>
             <div class="ver-mas">
-                <button @click="showAllCast">Ver más</button>
+                <button @click="toggleShowCast">{{ showFullCast ? 'Ver menos' : 'Ver más' }}</button>
             </div>
         </div>
 
