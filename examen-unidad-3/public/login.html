@@ -10,13 +10,13 @@
 <body>
     <div id="app">
         <form v-if="!isLoggedIn" @submit.prevent="onSubmit">
-            <label for="userName">Usuario:</label>
+            <label for="userName">Username:</label>
             <input type="text" id="userName" name="userName" v-model="userName" required>
 
-            <label for="pass">Contraseña:</label>
+            <label for="pass">Password:</label>
             <input type="password" id="pass" name="pass" v-model="passw" required>
 
-            <button type="submit">Acceder</button>
+            <button type="submit">Log In</button>
         </form>
     </div>
 
