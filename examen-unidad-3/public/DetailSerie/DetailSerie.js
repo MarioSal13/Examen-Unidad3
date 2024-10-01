@@ -4,6 +4,7 @@ createApp({
     setup() {
         const API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmI1MzM2MWZhYTMyMzYxNDM5MjQ5ODU0YTY3YTE5NyIsIm5iZiI6MTcyNzU5NDkxMy43Njc4MjIsInN1YiI6IjY2ZjJmNWM0MDIyMDhjNjdjODhkOWFjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.evddOiHWvAWL_YSSJ2RnBHT_JKsK8tLUHpj2MnXJEVE';
         const selectedSeries = ref({});
+        const selectedSeason = ref({});
         const rating = ref(5);
         const userRating = ref(0);
         const sessionId = ref(null);
@@ -17,7 +18,7 @@ createApp({
         const getSeriesDetails = (seriesId) => {
             fetch(`https://api.themoviedb.org/3/tv/${seriesId}?append_to_response=credits,videos,keywords,recommendations`, {
                 headers: {
-                    'Authorization': `Bearer ${API_KEY}` // Usar el token de acceso V4
+                    'Authorization': `Bearer ${API_KEY}`
                 }
             })
             .then(res => res.json())
@@ -27,12 +28,28 @@ createApp({
                 keywords.value = data.keywords?.results || [];
                 trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
                 recommendations.value = data.recommendations?.results || [];
+                getSeasonDetails(seriesId, 1);
             })
             .catch(error => console.log('Error al obtener datos', error));
         };
 
+        // Obtains details from season
+        const getSeasonDetails = (seriesId, seasonNumber) => {
+            fetch(`https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}`, {
+                headers: {
+                    'Authorization' : `Bearer ${API_KEY}`
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                selectedSeason.value = data;
+            })
+            .catch(error => console.log('Error al obtener datos temporada', error));
+        }
+
         // Add/Delete favorites
         const toggleFavorite = () => {
+
             const method = isFavorite.value ? 'DELETE' : 'POST';
             fetch(`https://api.themoviedb.org/3/account/{account_id}/favorite?session_id=${sessionId.value}`, {
                 method,
@@ -105,6 +122,7 @@ createApp({
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
             const seriesId = urlParams.get('id');
+            const seasonNumber = urlParams.get('seasonNumber') ||  1;
 
             console.log('URL completa:', window.location.href);
             console.log('Parámetros de URL:', window.location.search);
@@ -112,6 +130,7 @@ createApp({
 
             if (seriesId) {
                 getSeriesDetails(seriesId);
+                getSeasonDetails(seriesId, seasonNumber);
                 console.log('data', selectedSeries.value);
                 console.log('el id es' + seriesId);
             } else {
@@ -121,6 +140,7 @@ createApp({
 
         return {
             selectedSeries,
+            selectedSeason,
             rating,
             userRating,
             isFavorite,
@@ -129,6 +149,7 @@ createApp({
             trailer,
             recommendations,
             getSeriesDetails,
+            getSeasonDetails,
             toggleFavorite,
             rateSeries,
             deleteRating,
