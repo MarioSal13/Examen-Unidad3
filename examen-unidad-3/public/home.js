@@ -243,6 +243,10 @@ createApp({
             window.location.href = `DetailSerie/DetailSerie.html?id=${movie.id}`;
         }
 
+        const irPelicula = (movie) =>{
+            window.location.href = `detailPelicula/detailPelicula.html?id=${movie.id}`;
+        }
+
         const obtenerImagenBaner = async () =>{
             try {
                 const myHeaders = new Headers();
@@ -277,6 +281,7 @@ createApp({
             seriesMejorRaqueda,
             estado,
             irSerie,
+            irPelicula,
             imagenBaner,
             cerrarSesion 
         };

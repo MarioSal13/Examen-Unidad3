@@ -28,7 +28,7 @@ label {
 }
 
 input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -64,4 +64,74 @@ button:hover {
     margin-top: 15px;
     font-size: 0.9rem;
     color: #ffcc00;
+}
+
+
+
+/* Modal styles */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+}
+
+
+.modal-content {
+    display: flex;
+    flex-direction: row;
+    align-items:start;
+    justify-content: center;
+    background-color: #c5000a;
+    margin: auto; 
+    padding: 20px;
+    border: 1px solid #000000;
+    width: 400px;
+    height: auto;
+    color: white;
+    text-align: left;
+}
+
+
+#modal-title {
+    margin-top: 15px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+#modal-message {
+    font-size: 16px;
+}
+
+/* Loading spinner container */
+.loading-spinner {
+    position: fixed;
+    z-index: 9999; /* Asegura que esté encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+/* Spinner animation */
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3); /* Círculo semitransparente */
+    border-top: 8px solid white; /* Color de la parte superior del spinner */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite; /* Animación de rotación */
+}
+
+/* Animación de rotación */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

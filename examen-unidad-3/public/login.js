@@ -24,6 +24,9 @@ createApp({
     },
     methods: {
         async onSubmit() {
+
+            document.getElementById('loading').style.display = "flex";
+
             try {
                 const tokenUrl = 'https://api.themoviedb.org/3/authentication/token/new';
                 const tokenResponse = await fetch(tokenUrl, {
@@ -61,6 +64,9 @@ createApp({
 
                 const loginResult = await loginResponse.json();
 
+                // Ocultar el spinner
+                document.getElementById('loading').style.display = "none";
+
                 if (loginResult.success) {
                     this.isLoggedIn = true;
                     // Guardar usuario y token en sessionStorage
@@ -68,17 +74,25 @@ createApp({
                         nombre: this.userName,
                         token: requestToken
                     }));
-                    this.showNotification("Bienvenido", "Has iniciado sesión correctamente");
+
                     window.location.href = '/home.html';
                 } else {
                     console.log("Credenciales inválidas.");
                 }
             } catch (error) {
                 console.error(error.message);
+                this.showModal("Error: ", "Usuario o Contraseña incorrectos.");
+                document.getElementById('loading').style.display = "none";
             }
         },
-        showNotification(title, message) {
-            alert(`${title}: ${message}`);
+        showModal(title, message) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('modal').style.display = "block";
+    
+            setTimeout(() => {
+                document.getElementById('modal').style.display = "none";
+            }, 1500);
         }
     }
 }).mount('#app');
