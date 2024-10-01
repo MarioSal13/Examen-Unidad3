@@ -104,11 +104,6 @@ createApp({
             .catch(error => console.log('Error al eliminar rating:', error));
         };
 
-        // back to home
-        const goBack = () => {
-            window.location.href = '../home.html';
-        }
-
         // redirect to SeasonDetail
         const redirectSeasonDetail = (seasonNumber) => {
             const seriesId = selectedSeries.value.id;
@@ -146,7 +141,6 @@ createApp({
             toggleFavorite,
             rateSeries,
             deleteRating,
-            goBack,
             redirectSeasonDetail
         };
     }

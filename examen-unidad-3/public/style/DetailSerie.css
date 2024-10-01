@@ -1,5 +1,7 @@
+
 body {
     margin: 70px;
+    margin-bottom: 20vh;
     padding: 0;
     font-family: 'Arial', sans-serif;
     background-color: #1c1c1c;
@@ -58,7 +60,9 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
     padding: 5px 15px;
     border-radius: 5px;
+    letter-spacing: 1px;
 }
+
 
 .botones {
     text-align: center;
@@ -90,63 +94,140 @@ h1 {
     text-align: center;
 }
 
-.cast, .recommendations {
-    margin: 20px 0;
-}
 
-.actor, .recommendation-card {
-    display: inline-block;
-    background-color: #333;
-    border-radius: 10px;
-    overflow: hidden;
-    text-align: center;
-    margin: 0 10px;
-    width: 170px;
-}
-
-.actor img, .recommendation-card img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-.actors, .recommendations {
+.movies {
     display: flex;
     overflow-x: auto;
-    gap: 10px;
-    padding: 10px 20px;
+    gap: 20px;
+    padding: 20px;
     scroll-behavior: smooth;
 }
 
-.actors::-webkit-scrollbar,
-.recommendations::-webkit-scrollbar {
+.movies::-webkit-scrollbar {
     /*display: none;*/
 }
 
-.ver-mas {
+.movie {
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 180px;
+    height: 320px;
     text-align: center;
-    margin: 20px 0;
-}
-
-.ver-mas button {
-    background-color: #e50914;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+    flex-shrink: 0;
     cursor: pointer;
 }
 
-.ver-mas button:hover {
-    background-color: #b80610;
+.movie:hover {
+    transform: scale(1.05);
+}
+
+.movie img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.movie:hover img {
+    opacity: 0.85;
+}
+
+.movie h4 {
+    font-size: 1rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+
+.movie a {
+    color: inherit;
+    text-decoration: none;
 }
 
 
 @media (max-width: 768px) {
-    .actors, .recommendations {
-        gap: 5px;
+    .movies {
+        gap: 10px;
     }
-    .actor, .recommendation-card {
-        width: 100px;
+
+    .botones button {
+        font-size: 1rem;
+        padding: 8px 15px;
     }
+}
+
+@media (max-width: 480px) {
+    .movies {
+        gap: 8px;
+    }
+
+    .botones button {
+        margin: 10px 0;
+    }
+}
+
+.movie-info {
+    display: flex;
+    align-items: flex-start;
+    margin: 20px;
+  }
+
+  .movie-info img {
+    flex-shrink: 0;
+  }
+
+  .movie-details {
+    font-size: 20px;
+    max-width: 50%;
+    padding: 10px;
+  }
+
+  .movie-details p {
+    margin-bottom: 10px;
+  }
+
+  .movie-info {
+    display: flex;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.movie-info img {
+    flex-shrink: 0;
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.movie-details {
+    font-size: 20px;
+    max-width: 50%;
+    padding: 10px;
+}
+
+.season-details {
+    display: flex;
+    align-items: flex-start;
+}
+
+.season-poster {
+    flex-shrink: 0;
+    width: 150px;
+    margin-right: 20px;
+}
+
+.season-description {
+    max-width: 60%;
+}
+
+.season-description h2 {
+    margin-top: 0;
+}
+
+.season-description p {
+    margin-bottom: 10px;
 }
