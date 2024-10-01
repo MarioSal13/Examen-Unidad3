@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keyword</title>
     <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
-    <!-- <link rel="stylesheet" href="../style/.css"> -->
+    <link rel="stylesheet" href="../style/keyword.css">
 </head>
+
 <body>
     <div id="app">
-        <h1>{{ keywordName }}</h1> 
-    
-        <label for="type">Tipo:</label>
-        <select v-model="type">
-            <option value="movie">Películas</option>
-            <option value="tv">Series</option>
-        </select>
-    
-        <label for="order">Orden:</label>
-        <select v-model="sortBy">
-            <option value="popularity.desc">Popularidad Descendente</option>
-            <option value="popularity.asc">Popularidad Ascendente</option>
-        </select>
-    
-        <button @click="fetchResults">Buscar</button>
-    
-        <ul>
-            <li v-for="movie in movies" :key="movie.id">
-                <a @click="showDetails(movie)">{{ movie.title || movie.name }}</a>
-            </li>
-        </ul>
+        <header>
+            <h1>{{ keywordName }}</h1>
+            <h2>{{totalResults}} Results</h2>
+        </header>
+
+        <section id="filter">
+            <label for="type">type:</label>
+            <select v-model="type">
+                <option value="movie">Movies</option>
+                <option value="tv">Series</option>
+            </select>
+
+            <label for="order">Order:</label>
+            <select v-model="sortBy">
+                <option value="popularity.desc">Fallling Popularity</option>
+                <option value="popularity.asc">Upward Popularity</option>
+            </select>
+        </section>
+
+        <section id="results">
+            <div class="result" @click="showDetails(movie)" v-for="movie in movies" :key="movie.id" >
+                <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title"
+                    @click="showDetails(movie) ">
+                <div id="result-details">
+                    <a @click="showDetails(movie)">{{ movie.title || movie.name }}</a>
+                    <p>{{movie.release_date}}</p>
+                    <p>{{movie.overview}}</p>
+                </div>
+               
+            </div>
+            <button v-if="currentPage < totalPages" @click="loadMoreResults">Mostrar más</button>
+
+        </section>
+
     </div>
-    
 
     <script src="keyword.js"></script>
 </body>
+
 </html>

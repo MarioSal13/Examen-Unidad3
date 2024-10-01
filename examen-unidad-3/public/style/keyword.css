@@ -1,0 +1,110 @@
+body {
+    background-color:  #1c1c1c; 
+    color: #fff; 
+    font-family: Arial, sans-serif;
+    
+}
+
+#app {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #ff0000; 
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h2 {
+    color: #ffffff; 
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+label {
+    color: #ffffff; 
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+select {
+    background-color: #333; 
+    color: #fff; 
+    border: 1px solid #ff0000; 
+    padding: 5px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+#results div {
+    background-color:  #333; 
+    margin-bottom: 20px;
+    padding: 15px;
+    display:flex;
+    align-items: flex-start;
+    border-radius: 8px;
+}
+
+.result{
+    transition: transform 0.3s ease;
+}
+
+.result:hover {
+    transform: scale(1.05);
+}
+
+#result-details {
+    display: flex;
+    flex-direction: column; 
+}
+
+#results img {
+    width: 100px; 
+    height: auto; 
+    margin-right: 15px;
+    border-radius: 5%;
+}
+
+div a {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+div a:hover {
+   color: #cc0000;
+}
+
+div p {
+    color: #ccc; 
+    margin: 5px 0;
+}
+
+div small {
+    color: #999; 
+}
+
+
+button {
+    background-color: #ff0000;
+    color: #fff; 
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 20px 0;
+    display: block;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #cc0000; 
+}
