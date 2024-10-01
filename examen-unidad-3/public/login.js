@@ -75,6 +75,47 @@ createApp({
                         token: requestToken
                     }));
 
+                    // Obtener el session_id
+                    const sessionUrl = 'https://api.themoviedb.org/3/authentication/session/new';
+                    const sessionResponse = await fetch(sessionUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${API_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ request_token: requestToken })
+                    });
+
+                    if (!sessionResponse.ok) {
+                        throw new Error(`Error al obtener session_id: ${sessionResponse.status}`);
+                    }
+
+                    const sessionData = await sessionResponse.json();
+                    const session_id = sessionData.session_id;
+
+                    // Guardar session_id en sessionStorage
+                    sessionStorage.setItem('session_id', session_id);
+                    
+                    // Obtener account_id
+                    const accountUrl = 'https://api.themoviedb.org/3/account?session_id=' + session_id;
+                    const accountResponse = await fetch(accountUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${API_KEY}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!accountResponse.ok) {
+                        throw new Error(`Error al obtener account_id: ${accountResponse.status}`);
+                    }
+
+                    const accountData = await accountResponse.json();
+                    const account_id = accountData.id;
+
+                    // Guardar account_id en sessionStorage
+                    sessionStorage.setItem('account_id', account_id);
+
                     window.location.href = '/home.html';
                 } else {
                     console.log("Credenciales inválidas.");

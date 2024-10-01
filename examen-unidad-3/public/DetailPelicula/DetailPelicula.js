@@ -6,12 +6,14 @@ createApp({
         const selectedMovie = ref({});
         const rating = ref(5);
         const userRating = ref(0);
-        const sessionId = ref(null);
+        const account_id = sessionStorage.getItem('account_id');
+        const session_id = sessionStorage.getItem('session_id');
         const isFavorite = ref(false);
         const cast = ref([]);
         const keywords = ref([]);
         const trailer = ref(null);
         const recommendations = ref([]);
+        const showMore = ref(false);
 
         // Fetch data from a given URL
         const fetchData = async (url) => {
@@ -36,59 +38,57 @@ createApp({
             const data = await fetchData(url);
             if (data) {
                 selectedMovie.value = data;
+
+                selectedMovie.value.tagline = data.tagline;
+                selectedMovie.value.status = data.status;
+                selectedMovie.value.original_language = data.original_language;
+                selectedMovie.value.budget = data.budget;
+                selectedMovie.value.revenue = data.revenue;
+
                 cast.value = data.credits?.cast?.slice(0, 10) || [];
-                keywords.value = data.keywords?.results || [];
+                keywords.value = data.keywords?.keywords || [];
                 trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
                 recommendations.value = data.recommendations?.results || [];
+
+                isFavorite.value = data.account_states?.favorite
             }
         };
 
         // Toggle favorite status
         const toggleFavorite = async () => {
+
             const method = isFavorite.value ? 'DELETE' : 'POST';
-            const url = `https://api.themoviedb.org/3/account/{account_id}/favorite?session_id=${sessionId.value}`;
-            await fetch(url, {
-                method,
+
+            const options = {
+                method: method,
                 headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
-                    'Content-Type': 'application/json'
+                    "Accept": 'application/json',
+                    "Content-Type": 'application/json',
+                    "Authorization": `Bearer ${API_KEY}`
                 },
                 body: JSON.stringify({
-                    media_type: 'movie',
-                    media_id: selectedMovie.value.id,
-                    favorite: !isFavorite.value
+                    "media_type": "movie",
+                    "media_id": selectedMovie.id,
+                    "favorite": !isFavorite.value
                 })
-            });
-            isFavorite.value = !isFavorite.value;
-        };
+            };
 
-        // Rate the movie
-        const rateMovie = async () => {
-            const url = `https://api.themoviedb.org/3/movie/${selectedMovie.value.id}/rating?session_id=${sessionId.value}`;
-            await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ value: rating.value })
-            });
-            userRating.value = rating.value;
-        };
+            const url = `https://api.themoviedb.org/3/account/${account_id}/favorite?session_id=${session_id}`;
 
-        // Delete the rating
-        const deleteRating = async () => {
-            const url = `https://api.themoviedb.org/3/movie/${selectedMovie.value.id}/rating?session_id=${sessionId.value}`;
-            await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${API_KEY}`
+            try {
+                const response = await fetch(url, options);
+                
+                if (!response.ok) {
+                    throw new Error(`Error al actualizar estado de favorito: ${response.status}`);
                 }
-            });
-            userRating.value = 0;
+
+                isFavorite.value = !isFavorite.value;
+            } catch (error) {
+                console.error(error.message);
+            }
         };
 
-        // Navigate back to home
+        
         const goBack = () => {
             window.location.href = '../home.html';
         };
@@ -115,12 +115,11 @@ createApp({
             isFavorite,
             cast,
             keywords,
+            showMore,
             trailer,
             recommendations,
             getMovieDetails,
             toggleFavorite,
-            rateMovie,
-            deleteRating,
             goBack,
             irPelicula
         };

@@ -171,27 +171,61 @@ h1 {
     }
 }
 
+/*////////////////////// AQUI VA LO MIO W /////////////////////////////////*/
+
 .movie-info {
     display: flex;
     align-items: flex-start;
     margin: 20px;
-  }
-  
-  .movie-info img {
-    flex-shrink: 0;
-  }
-  
-  .movie-details {
-    font-size: 20px;
-    max-width: 50%; /* Limita el ancho del texto para no ocupar todo el espacio */
-    padding: 10px;
-  }
-  
-  .movie-details p {
-    margin-bottom: 10px;
-  }
+}
 
-  .navbar {
+.movie-info img {
+    flex-shrink: 0;
+}
+
+.movie-details {
+    font-size: 20px;
+    max-width: 35%; /* Limita el ancho del texto para no ocupar todo el espacio */
+    padding: 10px;
+}
+
+.movie-details p {
+    margin-bottom: 3vh;
+}
+
+/*Keywords*/
+.botoneskeywords button {
+    background-color: #e50914;
+    font-size: 1.2rem;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5vw;
+    margin-right: 0.5vw;
+    transition: background-color 0.3s ease;
+}
+
+.botoneskeywords button:hover {
+    background-color: #b80610;
+}
+
+/*COSA DEL TRAILER*/
+
+.trailer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+iframe {
+    width: 100vh;
+    height: 50vh;
+}
+
+/*////////////////////////////  AQUI TERMINA LO VIO W /////////////////////////////*/
+
+.navbar {
     background-color: #1c1c1c;
     padding: 15px 20px;
     position: sticky; /* Mantiene el navbar en la parte superior al hacer scroll */

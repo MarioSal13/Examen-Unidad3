@@ -7,7 +7,8 @@ createApp({
         const selectedSeason = ref({});
         const rating = ref(5);
         const userRating = ref(0);
-        const sessionId = ref(null);
+        const account_id = sessionStorage.getItem('account_id');
+        const session_id = sessionStorage.getItem('session_id');
         const isFavorite = ref(false);
         const cast = ref([]);
         const keywords = ref([]);
@@ -51,7 +52,7 @@ createApp({
         // Add/Delete favorites
         const toggleFavorite = () => {
             const method = isFavorite.value ? 'DELETE' : 'POST';
-            fetch(`https://api.themoviedb.org/3/account/{account_id}/favorite?session_id=${sessionId.value}`, {
+            fetch(`https://api.themoviedb.org/3//account/${account_id}/favorite?session_id=${session_id}`, {
                 method,
                 headers: {
                     'Authorization': `Bearer ${API_KEY}`,
