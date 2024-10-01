@@ -9,7 +9,7 @@ createApp({
         const getSeasonDetails = (seriesId, seasonNumber) => {
             fetch(`https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}?append_to_response=credits`, {
                 headers: {
-                    'Authorization': `Bearer ${API_KEY}` // Usa el token de acceso V4
+                    'Authorization': `Bearer ${API_KEY}`
                 }
             })
             .then(res => res.json())
