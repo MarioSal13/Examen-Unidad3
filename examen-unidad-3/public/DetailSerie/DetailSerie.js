@@ -49,7 +49,6 @@ createApp({
 
         // Add/Delete favorites
         const toggleFavorite = () => {
-
             const method = isFavorite.value ? 'DELETE' : 'POST';
             fetch(`https://api.themoviedb.org/3/account/{account_id}/favorite?session_id=${sessionId.value}`, {
                 method,
@@ -107,7 +106,7 @@ createApp({
 
         // back to home
         const goBack = () => {
-            window.location.href = '../home.hmtl';
+            window.location.href = '../home.html';
         }
 
         // redirect to SeasonDetail
@@ -124,15 +123,9 @@ createApp({
             const seriesId = urlParams.get('id');
             const seasonNumber = urlParams.get('seasonNumber') ||  1;
 
-            console.log('URL completa:', window.location.href);
-            console.log('Parámetros de URL:', window.location.search);
-            console.log('ID extraído:', seriesId);
-
             if (seriesId) {
                 getSeriesDetails(seriesId);
                 getSeasonDetails(seriesId, seasonNumber);
-                console.log('data', selectedSeries.value);
-                console.log('el id es' + seriesId);
             } else {
                 console.error('No se encontró el id de la serie en URL');
             }

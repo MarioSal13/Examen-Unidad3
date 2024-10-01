@@ -16,7 +16,7 @@
             <p><strong>Fecha de estreno:</strong> {{ selectedSeries.first_air_date }}</p>
             <p><strong>Géneros:</strong> {{ selectedSeries.genres.map(genre => genre.name).join(', ') }}</p>
             <p><strong>Clasificación por edades:</strong> {{ selectedSeries.adult ? 'R (Mayores de 18)' : 'A (Para todas las edades)' }}</p>
-            <p><strong>Calificación:</strong> {{ selectedSeries.vote_average }} / 10</p>
+            <p><strong>Calificación:</strong> {{ selectedSeries.vote_average.toFixed(1) }} / 10</p>
             <p><strong>Resumen:</strong> {{ selectedSeries.overview }}</p>
 
             <p v-if="userRating !== 0"><strong>Tu Calificación:</strong> {{ userRating }}</p>
@@ -36,10 +36,15 @@
 
         <div class="cast" v-if="cast.length">
             <h2>Reparto de la serie</h2>
-            <div v-for="actor in cast" :key="actor.id" class="actor">
-              <img :src="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="Foto del actor">
-              <p><strong>{{ actor.name }}</strong> como <strong>{{ actor.character }}</strong></p>
-              <p><strong>Episodios:</strong> {{ actor.episode_count }}</p>
+            <div class="actors">
+                <div v-for="(actor, index) in cast.slice(0, 10)" :key="actor.id" class="actor">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="Foto del actor">
+                    <p><strong>{{ actor.name }}</strong> como <strong>{{ actor.character }}</strong></p>
+                    <p><strong>Episodios:</strong> {{ actor.episode_count }}</p>
+                </div>
+            </div>
+            <div class="ver-mas">
+                <button @click="showAllCast">Ver más</button>
             </div>
         </div>
 
@@ -65,10 +70,15 @@
         </div>
 
         <div class="recommendations" v-if="recommendations.length">
-            <h2>Recomendaciones</h2>
-            <div v-for="recommendation in recommendations" :key="recommendation.id" class="recommendation-card" @click="getSeriesDetails(recommendation.id)">
-                <img :src="'https://image.tmdb.org/t/p/w500' + recommendation.poster_path" alt="Poster de la recomendación">
-                <p>{{ recommendation.name }}</p>
+            <div class="recommendations">
+                <h2>Recomendaciones</h2>
+                <div v-for="(recommendation, index) in recommendations.slice(0, 10)" :key="recommendation.id" class="recommendation-card" @click="getSeriesDetails(recommendation.id)">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + recommendation.poster_path" alt="Poster de la recomendación">
+                    <p>{{ recommendation.name }}</p>
+                </div>
+            </div>
+            <div class="ver-mas">
+                <button @click="showAllRecommendations">Ver más</button>
             </div>
         </div>
     </div>
