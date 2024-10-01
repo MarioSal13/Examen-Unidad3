@@ -190,4 +190,57 @@ h1 {
   .movie-details p {
     margin-bottom: 10px;
   }
-  
+
+  .navbar {
+    background-color: #1c1c1c;
+    padding: 15px 20px;
+    position: sticky; /* Mantiene el navbar en la parte superior al hacer scroll */
+    top: 0;
+    z-index: 1000; /* Asegura que el navbar esté por encima de otros elementos */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidad */
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Usar flexbox para alinear elementos */
+    justify-content: space-between; /* Espacio entre elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+.navbar li {
+    margin: 0 15px;
+}
+
+.navbar a {
+    color: #ffffff; 
+    text-decoration: none; 
+    font-size: 1.1rem; 
+    padding: 10px 15px; 
+    transition: background-color 0.3s ease, color 0.3s ease; 
+    border-radius: 5px;
+}
+
+.navbar a:hover {
+    background-color: #e50914; 
+    color: #ffffff;
+}
+
+.logout-button {
+    background-color: #f44336; /* Color del botón de logout */
+    color: white;
+    padding: 10px 20px; /* Aumenté el padding horizontal para más espacio */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave para el hover */
+    margin-left: auto; /* Mueve el botón a la derecha */
+    display: flex; /* Usar flex para centrar contenido */
+    align-items: center; /* Centrar verticalmente el texto */
+}
+
+.logout-button:hover {
+    background-color: #d32f2f; /* Color al pasar el mouse */
+}
+

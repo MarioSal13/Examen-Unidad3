@@ -9,13 +9,31 @@
 </head>
 <body>
     <div id="app">
-        
-        <div class="botones">
-            <button @click="estado=0"> Movies </button>
-            <button @click="estado=1"> Series or TV-Shows</button>
-            <button class="logout-button" @click="cerrarSesion">Log out</button>
-        </div>
 
+        <nav class="navbar" v-if="estado==0">
+            <ul>
+                <li><a @click="estado = 0" href="#">Movies</a></li>
+                <li><a @click="estado = 1" href="#">Series o TV Shows</a></li>
+                <li><a href="#tendencias-movie" >Trending</a></li>
+                <li><a href="#mas-populares-movie">What's Popular</a></li>
+                <li><a href="#top-ranqued-movie">Top Rated</a></li>
+                <li><a href="#Movie-proximo">Up Coming</a></li>
+                <li><a class="logout-button" @click="cerrarSesion">Log out</a></li>
+            </ul>
+        </nav>
+
+        <nav class="navbar" v-if="estado==1">
+            <ul>
+                <li><a @click="estado = 0" href="#">Movies</a></li>
+                <li><a @click="estado = 1" href="#">Series o TV Shows</a></li>
+                <li><a href="#tendencias-serie" >Trending</a></li>
+                <li><a href="#mas-populares-serie">What's Popular</a></li>
+                <li><a href="#al-Aire">Airing Today</a></li>
+                <li><a href="#On-tv">On TV</a></li>
+                <li><a href="#top-ranqued">Top Rated</a></li>
+                <li><a class="logout-button" @click="cerrarSesion">Log out</a></li>
+            </ul>
+        </nav>
 
         <div class="banner" v-if="imagenBaner">
             <img :src="'https://image.tmdb.org/t/p/w1280' + imagenBaner.backdrop_path" :alt="baner">
@@ -23,24 +41,23 @@
             <h3>Millions of movies, TV shows and people to discover. Explore now.</h3>
         </div>
 
-
-
         <div v-if="estado==0">
-            <h1>Trending</h1>
+            <h1 id="tendencias-movie">Trending</h1>
             <div class="movies">
                 <div class="movie" v-for="movie in movies" :key="movie.id">
                     <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
                     <h4>{{ movie.title }}</h4>
                 </div>
             </div>
-            <h1>What's Popular</h1>
+            <h1 id="mas-populares-movie">What's Popular</h1>
             <div class="movies">
                 <div class="movie" v-for="movie in moviesPopulares" :key="movie.id">
                     <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
                     <h4>{{ movie.title }}</h4>
                 </div>
             </div>
-            <h1> Top Rated </h1>
+
+            <h1 id="top-ranqued-movie" >Top Rated</h1>
             <div class="movies">
                 <div class="movie" v-for="movie in moviesMejorPunt" :key="movie.id">
                     <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
@@ -48,7 +65,7 @@
                 </div>
             </div>
 
-            <h1> Up Coming </h1>
+            <h1 id="Movie-proximo" >Up Coming</h1>
             <div class="movies">
                 <div class="movie" v-for="movie in moviesProxima" :key="movie.id">
                     <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
@@ -58,45 +75,45 @@
         </div>
 
         <div v-if="estado==1">
-                <h1>Trending</h1>
-                <div class="movies">
-                    <div class="movie" v-for="movie in serie" :key="movie.id">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        <h4>{{ movie.name }}</h4>
-                    </div>
+            <h1 id="tendencias-serie">Trending</h1>
+            <div class="movies">
+                <div class="movie" v-for="movie in serie" :key="movie.id">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
+                    <h4>{{ movie.name }}</h4>
                 </div>
+            </div>
 
-                <h1>What's Popular</h1>
-                <div class="movies">
-                    <div class="movie" v-for="movie in seriesPopular" :key="movie.id">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        <h4>{{ movie.name }}</h4>
-                    </div>
+            <h1 id="mas-populares-serie">What's Popular</h1>
+            <div class="movies">
+                <div class="movie" v-for="movie in seriesPopular" :key="movie.id">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
+                    <h4>{{ movie.name }}</h4>
                 </div>
+            </div>
 
-                <h1>Airing Today</h1>
-                <div class="movies">
-                    <div class="movie" v-for="movie in seriesAireHoy" :key="movie.id">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        <h4>{{ movie.name }}</h4>
-                    </div>
+            <h1 id="al-Aire">Airing Today</h1>
+            <div class="movies">
+                <div class="movie" v-for="movie in seriesAireHoy" :key="movie.id">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
+                    <h4>{{ movie.name }}</h4>
                 </div>
+            </div>
 
-                <h1>On TV</h1>
-                <div class="movies">
-                    <div class="movie" v-for="movie in seriesAire" :key="movie.id">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        <h4>{{ movie.name }}</h4>
-                    </div>
+            <h1 id="On-tv">On TV</h1>
+            <div class="movies">
+                <div class="movie" v-for="movie in seriesAire" :key="movie.id">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
+                    <h4>{{ movie.name }}</h4>
                 </div>
+            </div>
 
-                <h1>Top Rated</h1>
-                <div class="movies">
-                    <div class="movie" v-for="movie in seriesMejorRaqueda" :key="movie.id">
-                            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
-                        <h4>{{ movie.name }}</h4>
-                    </div>
+            <h1 id="top-ranqued">Top Rated</h1>
+            <div class="movies">
+                <div class="movie" v-for="movie in seriesMejorRaqueda" :key="movie.id">
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irSerie(movie)">
+                    <h4>{{ movie.name }}</h4>
                 </div>
+            </div>
         </div>
 
     </div>

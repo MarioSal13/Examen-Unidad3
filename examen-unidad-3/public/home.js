@@ -38,7 +38,7 @@ createApp({
                 window.location.href = 'login.html';
             }
         };
-        
+
         const cerrarSesion = () => {
             sessionStorage.removeItem('Usuario');
             window.location.href = 'login.html';
@@ -76,7 +76,7 @@ createApp({
                     redirect: 'follow'
                 };
 
-                const response = await fetch("https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1", requestOptions);
+                const response = await fetch("https://api.themoviedb.org/3/movie/popular", requestOptions);
                 const data = await response.json();
                 moviesPopulares.value = data.results.map(movie => ({
                     ...movie,
@@ -283,7 +283,7 @@ createApp({
             irSerie,
             irPelicula,
             imagenBaner,
-            cerrarSesion 
+            cerrarSesion
         };
     },
 
