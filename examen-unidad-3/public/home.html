@@ -29,27 +29,21 @@
             <h1>Tendencias</h1>
             <div class="movies">
                 <div class="movie" v-for="movie in movies" :key="movie.id">
-                    <a href="">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
-                    </a>
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
                     <h4>{{ movie.title }}</h4>
                 </div>
             </div>
             <h1>Mas populares</h1>
             <div class="movies">
                 <div class="movie" v-for="movie in moviesPopulares" :key="movie.id">
-                    <a href="">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
-                    </a>
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
                     <h4>{{ movie.title }}</h4>
                 </div>
             </div>
             <h1> Mejor valoradas </h1>
             <div class="movies">
                 <div class="movie" v-for="movie in moviesMejorPunt" :key="movie.id">
-                    <a href="">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
-                    </a>
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
                     <h4>{{ movie.title }}</h4>
                 </div>
             </div>
@@ -57,9 +51,7 @@
             <h1> Proximas </h1>
             <div class="movies">
                 <div class="movie" v-for="movie in moviesProxima" :key="movie.id">
-                    <a href="">
-                        <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
-                    </a>
+                    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title" @click="irPelicula(movie)">
                     <h4>{{ movie.title }}</h4>
                 </div>
             </div>

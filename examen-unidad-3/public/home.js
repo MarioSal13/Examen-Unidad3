@@ -244,7 +244,7 @@ createApp({
         }
 
         const irPelicula = (movie) =>{
-            window.location.href = `detailPelicula/detailPelicula.html?id=${movie.id}`;
+            window.location.href = `DetailPelicula/DetailPelicula.html?id=${movie.id}`;
         }
 
         const obtenerImagenBaner = async () =>{
