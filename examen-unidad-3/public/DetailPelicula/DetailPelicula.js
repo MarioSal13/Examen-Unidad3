@@ -2,7 +2,7 @@ const { createApp, ref, onMounted } = Vue;
 
 createApp({
     setup() {
-        const API_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmI1MzM2MWZhYTMyMzYxNDM5MjQ5ODU0YTY3YTE5NyIsIm5iZiI6MTcyNzU5NDkxMy43Njc4MjIsInN1YiI6IjY2ZjJmNWM0MDIyMDhjNjdjODhkOWFjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.evddOiHWvAWL_YSSJ2RnBHT_JKsK8tLUHpj2MnXJEVE';
+        const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNTU2OTBkZjg3ZGQ4YjQ1ZmQ0OGM2MjEzNzgzMjAxMiIsIm5iZiI6MTcyNzU3NTA0Mi4zMDg0NDYsInN1YiI6IjY2ZjJmNmRjMDIyMDhjNjdjODhkOWJjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AeGm_NWqjLKptJznk1e5rGNSPdNkaxJZB6EBkPYB_Mc";
         const selectedMovie = ref({});
         const rating = ref(5);
         const userRating = ref(0);
@@ -56,36 +56,21 @@ createApp({
 
         // Toggle favorite status
         const toggleFavorite = async () => {
-
-            const method = isFavorite.value ? 'DELETE' : 'POST';
-
+       
             const options = {
-                method: method,
+                method: 'POST',
                 headers: {
-                    "Accept": 'application/json',
-                    "Content-Type": 'application/json',
-                    "Authorization": `Bearer ${API_KEY}`
+                  accept: 'application/json',
+                  'content-type': 'application/json',
+                  Authorization: `Bearer ${API_KEY}`
                 },
-                body: JSON.stringify({
-                    "media_type": "movie",
-                    "media_id": selectedMovie.id,
-                    "favorite": !isFavorite.value
-                })
-            };
-
-            const url = `https://api.themoviedb.org/3/account/${account_id}/favorite?session_id=${session_id}`;
-
-            try {
-                const response = await fetch(url, options);
-                
-                if (!response.ok) {
-                    throw new Error(`Error al actualizar estado de favorito: ${response.status}`);
-                }
-
-                isFavorite.value = !isFavorite.value;
-            } catch (error) {
-                console.error(error.message);
-            }
+                body: JSON.stringify({media_type: 'movie', media_id: selectedMovie.value.id, favorite: !isFavorite.value})
+              };
+              
+              fetch(`https://api.themoviedb.org/3/account/${account_id}/favorite?session_id=${session_id}`, options)
+                .then(response => response.json())
+                .then(response => console.log(response))
+                .catch(err => console.error(err));
         };
 
         
