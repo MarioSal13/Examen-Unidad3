@@ -17,7 +17,7 @@
         </header>
 
         <section id="filter">
-            <label for="type">type:</label>
+            <label for="type">Type:</label>
             <select v-model="type">
                 <option value="movie">Movies</option>
                 <option value="tv">Series</option>
@@ -32,8 +32,9 @@
 
         <section id="results">
             <div class="result" @click="showDetails(movie)" v-for="movie in movies" :key="movie.id" >
-                <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title"
-                    @click="showDetails(movie) ">
+                <img :src="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" 
+                :alt="movie.title || movie.name" 
+                @click="showDetails(movie)">
                 <div id="result-details">
                     <a @click="showDetails(movie)">{{ movie.title || movie.name }}</a>
                     <p>{{movie.release_date}}</p>

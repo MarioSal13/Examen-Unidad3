@@ -43,14 +43,16 @@ select {
 #results div {
     background-color:  #333; 
     margin-bottom: 20px;
-    padding: 15px;
     display:flex;
     align-items: flex-start;
     border-radius: 8px;
+    overflow: hidden; 
 }
 
 .result{
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .result:hover {
@@ -60,13 +62,13 @@ select {
 #result-details {
     display: flex;
     flex-direction: column; 
+    margin: 15px;
 }
 
 #results img {
-    width: 100px; 
+    width: 130px; 
     height: auto; 
     margin-right: 15px;
-    border-radius: 5%;
 }
 
 div a {
