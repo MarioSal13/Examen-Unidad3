@@ -156,6 +156,13 @@ createApp({
             }
         });
 
+        const cerrarSesion = () => {
+            sessionStorage.removeItem('Usuario');
+            sessionStorage.removeItem('session_id');
+            sessionStorage.removeItem('account_id');
+            window.location.href = '../login.html';
+        }
+
         return {
             selectedSeries,
             selectedSeason,
@@ -177,7 +184,8 @@ createApp({
             toggleAllSeasons,
             toggleShowCast,
             goKeyword,
-            goGenre
+            goGenre,
+            cerrarSesion
         };
     }
 }).mount('#app');

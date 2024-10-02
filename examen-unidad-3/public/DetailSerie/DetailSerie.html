@@ -6,9 +6,23 @@
     <title>Detalle Serie</title>
     <link rel="stylesheet" href="../style/DetailSerie.css">
     <script type="module" src="DetailSerie.js" defer></script>
+    <link rel="stylesheet" href="../NavBar/nav.css">
 </head>
 <body>
     <div id="app">
+        <nav>
+            <p class="logo">
+                <a href="home.html">
+                    <img src="https://www.pngall.com/wp-content/uploads/13/Movie-PNG-Image.png" alt="ReelFlix Logo">
+                    <span>ReelFlix</span>
+                </a>
+            </p>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a  @click="cerrarSesion">Log out</a></li>
+            </ul>
+        </nav>
+
         <div class="serie-info" v-if="selectedSeries && selectedSeries.poster_path">
             <div class="movie-info">
                 <img :src="'https://image.tmdb.org/t/p/w500' + selectedSeries.poster_path" alt="Poster de la serie">
