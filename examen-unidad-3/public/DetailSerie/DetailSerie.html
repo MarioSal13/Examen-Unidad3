@@ -15,7 +15,12 @@
                 <div class="movie-details">
                     <h1>{{ selectedSeries.name }}</h1>
                     <p><strong>Fecha de estreno:</strong> {{ selectedSeries.first_air_date }}</p>
-                    <p><strong>Géneros:</strong> {{ selectedSeries.genres.map(genre => genre.name).join(', ') }}</p>
+                    <div class="botoneskeywords">
+                        <strong>Géneros:</strong>
+                        <div v-for="genre in selectedSeries.genres" :key="genre.id" class="genre-item">
+                            <button @click="goGenre(genre)" class="genre-button">{{ genre.name }}</button>
+                        </div>
+                    </div>
                     <p><strong>Clasificación por edades:</strong> {{ selectedSeries.adult ? 'R (Mayores de 18)' : 'A (Para todas las edades)' }}</p>
                     <p><strong>Calificación:</strong> {{ selectedSeries.vote_average.toFixed(1) }} / 10</p>
                     <p><strong>Resumen:</strong> {{ selectedSeries.overview }}</p>
@@ -30,10 +35,10 @@
             </div>
         </div>
 
-        <div class="keywords">
+        <div class="botoneskeywords">
             <h3>Palabras clave</h3>
             <ul>
-                <li v-for="keyword in keywords" :key="keyword.id">{{ keyword.name }}</li>
+                <button v-for="keyword in keywords" :key="keyword.id" @click="goKeyword(keyword)">{{ keyword.name }}</button>
             </ul>
         </div>
 

@@ -132,6 +132,16 @@ createApp({
             }
         }
 
+        // keywords
+        const goKeyword = (keyword) => {
+            window.location.href = `../KeywordDetail/keyword.html?id=${keyword.id}`;
+        };
+
+        // genres
+        const goGenre = (genre) => {
+            window.location.href = `../CategoryDetail/genre.html?id=${genre.id}`;
+        };
+
         // On mount
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -165,7 +175,9 @@ createApp({
             deleteRating,
             redirectSeasonDetail,
             toggleAllSeasons,
-            toggleShowCast
+            toggleShowCast,
+            goKeyword,
+            goGenre
         };
     }
 }).mount('#app');
