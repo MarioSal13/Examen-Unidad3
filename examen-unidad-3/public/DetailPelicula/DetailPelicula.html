@@ -24,9 +24,11 @@
                 <div class="movie-details">
                     <p>
                         <strong>Genres: </strong>
-                        <span v-for="(genre, index) in selectedMovie.genres" :key="index">
-                            {{ genre.name }}<span v-if="index < selectedMovie.genres.length - 1">, </span>
-                        </span>
+                        <div class="botoneskeywords">
+                            <button v-for="(genre, index) in selectedMovie.genres" :key="index" @click="goGenre(genre)">
+                                {{ genre.name }}<span v-if="index < selectedMovie.genres.length - 1"></span>
+                            </button>
+                        </div>
                     </p>
                     <p><cite>{{ selectedMovie.tagline }}</cite></p>
                     <p><strong>Overview: </strong>{{ selectedMovie.overview }}</p>
@@ -53,26 +55,22 @@
                         <p>
                             <strong>Favorite: </strong>
                             <button @click="toggleFavorite">
-                                {{ isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}
-                            </button>
+                            {{ isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}
+                        </button>
                         </p>
                     </div>
                     
                     <strong>Keywords:</strong>
                     <div class="botoneskeywords">
-                        <button v-for="(keyword, index) in showMore ? keywords : keywords.slice(0, 6)" :key="keyword.id">
+                        <button v-for="(keyword, index) in showMore ? keywords : keywords.slice(0, 5)" :key="keyword.id" @click="goKeyword(keyword)">
                             {{ keyword.name }}
                         </button>
                         <button v-if="keywords.length > 6" @click="showMore = !showMore" style="background-color: #ff4141;">
                             {{ showMore ? 'See Less' : 'See More' }}
                         </button>
-                        <p v-else>No keywords available</p>
                     </div> 
-                    
                 </div>
-
             </div>
-            
             <h2>Top Billed Cast:</h2>
             <div v-if="cast.length"></div>
                 <div class="movies">
@@ -82,7 +80,6 @@
                     </div>
                 </div>
             </div>
-            
             <div>
                 <h1 style="display: block;">Trailer</h1>
                 <div v-if="trailer" class="trailer-container">
@@ -95,8 +92,6 @@
                     </iframe>
                 </div>
             </div>
-            
-
             <h2>Recommendations:</h2>
             <div v-if="recommendations.length">
                 <div class="movies">
@@ -109,10 +104,6 @@
                     </div>
                 </div>
             </div>
-            
-            
-
-            
         </div>
     </div> 
 

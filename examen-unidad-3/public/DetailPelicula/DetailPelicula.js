@@ -4,7 +4,6 @@ createApp({
     setup() {
         const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNTU2OTBkZjg3ZGQ4YjQ1ZmQ0OGM2MjEzNzgzMjAxMiIsIm5iZiI6MTcyNzU3NTA0Mi4zMDg0NDYsInN1YiI6IjY2ZjJmNmRjMDIyMDhjNjdjODhkOWJjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AeGm_NWqjLKptJznk1e5rGNSPdNkaxJZB6EBkPYB_Mc";
         const selectedMovie = ref({});
-        const rating = ref(5);
         const userRating = ref(0);
         const account_id = sessionStorage.getItem('account_id');
         const session_id = sessionStorage.getItem('session_id');
@@ -90,9 +89,16 @@ createApp({
 
         };
 
-        
         const goBack = () => {
             window.location.href = '../home.html';
+        };
+
+        const goKeyword = (keyword) => {
+            window.location.href = `../KeywordDetail/keyword.html?id=${keyword.id}`;
+        };
+
+        const goGenre = (genre) => {
+            window.location.href = `../CategoryDetail/genre.html?id=${genre.id}`;
         };
 
         // On component mount
@@ -112,7 +118,6 @@ createApp({
 
         return {
             selectedMovie,
-            rating,
             userRating,
             isFavorite,
             cast,
@@ -123,6 +128,8 @@ createApp({
             getMovieDetails,
             toggleFavorite,
             goBack,
+            goKeyword,
+            goGenre,
             irPelicula
         };
     }
