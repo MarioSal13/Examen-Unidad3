@@ -95,7 +95,7 @@ createApp({
 
                     // Guardar session_id en sessionStorage
                     sessionStorage.setItem('session_id', session_id);
-                    
+
                     // Obtener account_id
                     const accountUrl = 'https://api.themoviedb.org/3/account?session_id=' + session_id;
                     const accountResponse = await fetch(accountUrl, {
@@ -113,7 +113,6 @@ createApp({
                     const accountData = await accountResponse.json();
                     const account_id = accountData.id;
 
-                    // Guardar account_id en sessionStorage
                     sessionStorage.setItem('account_id', account_id);
 
                     window.location.href = './home.html';
@@ -130,7 +129,7 @@ createApp({
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-message').innerText = message;
             document.getElementById('modal').style.display = "block";
-    
+
             setTimeout(() => {
                 document.getElementById('modal').style.display = "none";
             }, 1500);
