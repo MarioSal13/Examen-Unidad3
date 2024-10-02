@@ -28,50 +28,50 @@
                 <img :src="'https://image.tmdb.org/t/p/w500' + selectedSeries.poster_path" alt="Poster de la serie">
                 <div class="movie-details">
                     <h1>{{ selectedSeries.name }}</h1>
-                    <p><strong>Fecha de estreno:</strong> {{ selectedSeries.first_air_date }}</p>
+                    <p><strong>Release date:</strong> {{ selectedSeries.first_air_date }}</p>
                     <div class="botoneskeywords">
-                        <strong>Géneros:</strong>
+                        <strong>Genres:</strong>
                         <div v-for="genre in selectedSeries.genres" :key="genre.id" class="genre-item">
                             <button @click="goGenre(genre)" class="genre-button">{{ genre.name }}</button>
                         </div>
                     </div>
-                    <p><strong>Clasificación por edades:</strong> {{ selectedSeries.adult ? 'R (Mayores de 18)' : 'A (Para todas las edades)' }}</p>
-                    <p><strong>Calificación:</strong> {{ selectedSeries.vote_average.toFixed(1) }} / 10</p>
-                    <p><strong>Resumen:</strong> {{ selectedSeries.overview }}</p>
+                    <p><strong>Age classification:</strong> {{ selectedSeries.adult ? 'R (18+)' : 'A (For all)' }}</p>
+                    <p><strong>Rate:</strong> {{ selectedSeries.vote_average.toFixed(1) }} / 10</p>
+                    <p><strong>Sinopsis:</strong> {{ selectedSeries.overview }}</p>
 
-                    <p v-if="userRating !== 0"><strong>Tu Calificación:</strong> {{ userRating }}</p>
+                    <p v-if="userRating !== 0"><strong>Your Rate:</strong> {{ userRating }}</p>
                     <input type="number" v-model="rating" min="1" max="10" placeholder="Califica de 1 a 10">
-                    <button @click="rateSeries">Enviar Rating</button>
-                    <button v-if="userRating !== 0" @click="deleteRating">Eliminar Rating</button>
+                    <button @click="rateSeries">Send Rating</button>
+                    <button v-if="userRating !== 0" @click="deleteRating">Delete Rating</button>
 
-                    <button @click="toggleFavorite">{{ isFavorite ? 'Eliminar de favoritos' : 'Añadir a Favoritos' }}</button>
+                    <button @click="toggleFavorite">{{ isFavorite ? 'Delete from favorites' : 'Add favorite' }}</button>
                 </div>
             
                 <div class="serie-facts">
-                    <h3>Hechos</h3>
-                    <p><strong>Nombre Original:</strong> {{ selectedSeries.original_name }}</p>
-                    <p><strong>Estado:</strong> {{ selectedSeries.status }}</p>
-                    <p><strong>Canal:</strong>
+                    <h3>facts</h3>
+                    <p><strong>Name Original:</strong> {{ selectedSeries.original_name }}</p>
+                    <p><strong>State:</strong> {{ selectedSeries.status }}</p>
+                    <p><strong>Channel:</strong>
                         <div v-for="network in selectedSeries.networks" :key="network.id">
                             {{ network.name }}
                         </div>
                     </p>
-                    <p><strong>Tipo:</strong> {{ selectedSeries.type }}</p>
-                    <p><strong>Idioma Original:</strong> {{ selectedSeries.original_language }}</p>
+                    <p><strong>Type:</strong> {{ selectedSeries.type }}</p>
+                    <p><strong>Original language:</strong> {{ selectedSeries.original_language }}</p>
                 </div>
             </div>
         </div>
 
 
         <div class="botoneskeywords">
-            <h3>Palabras clave</h3>
+            <h3>Key words</h3>
             <ul>
                 <button v-for="keyword in keywords" :key="keyword.id" @click="goKeyword(keyword)">{{ keyword.name }}</button>
             </ul>
         </div>
 
         <div class="cast" v-if="cast.length">
-            <h2>Reparto de la serie</h2>
+            <h2>Casting</h2>
             <div class="actors movies">
                 <div v-for="(actor, index) in showFullCast ? cast : cast.slice(0, 10)" :key="actor.id" class="actor movie">
                     <img :src="actor.profile_path ? 'https://image.tmdb.org/t/p/w500' + actor.profile_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" alt="Foto del actor">
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="ver-mas">
-                <button @click="toggleShowCast">{{ showFullCast ? 'Ver menos' : 'Ver más' }}</button>
+                <button @click="toggleShowCast">{{ showFullCast ? 'Show less' : 'Show more' }}</button>
             </div>
         </div>
 
@@ -88,37 +88,37 @@
                 <img :src="'https://image.tmdb.org/t/p/w500' + selectedSeason.poster_path" alt="Poster de la temporada" class="season-poster">
                 <div class="season-description">
                     <h2 @click="redirectSeasonDetail(selectedSeason.season_number)" style="cursor: pointer; color: blue;">
-                        Temporada {{ selectedSeason.season_number }}
+                        Season {{ selectedSeason.season_number }}
                     </h2>
-                    <p><strong>Calificación:</strong> {{ selectedSeason.vote_average.toFixed(1) }} / 10</p>
-                    <p><strong>Año de estreno:</strong> {{ selectedSeason.air_date.split('-')[0] }}</p>
-                    <p><strong>Cantidad de episodios:</strong> {{ selectedSeason.episodes.length }}</p>
+                    <p><strong>Rate:</strong> {{ selectedSeason.vote_average.toFixed(1) }} / 10</p>
+                    <p><strong>Release year:</strong> {{ selectedSeason.air_date.split('-')[0] }}</p>
+                    <p><strong>Numer of chapters:</strong> {{ selectedSeason.episodes.length }}</p>
                     <p><strong>Sinopsis:</strong> {{ selectedSeason.overview }}</p>
-                    <p><strong>Último episodio lanzado:</strong> {{ selectedSeason.episodes[selectedSeason.episodes.length - 1].name }}</p>
-                    <p><strong>Fecha de lanzamiento:</strong> {{ selectedSeason.episodes[selectedSeason.episodes.length - 1].air_date }}</p>
-                    <p v-if="selectedSeason.episodes[selectedSeason.episodes.length - 1].season_finale">Final de temporada</p>
-                    <p @click="toggleAllSeasons" style="cursor: pointer; color: blue;">Ver todas las Temporadas</p>
+                    <p><strong>Last chapter:</strong> {{ selectedSeason.episodes[selectedSeason.episodes.length - 1].name }}</p>
+                    <p><strong>Release date:</strong> {{ selectedSeason.episodes[selectedSeason.episodes.length - 1].air_date }}</p>
+                    <p v-if="selectedSeason.episodes[selectedSeason.episodes.length - 1].season_finale">Season finale</p>
+                    <p @click="toggleAllSeasons" style="cursor: pointer; color: blue;">Show all seasons</p>
                 </div>
             </div>
         </div>
 
         <div v-if="showAllSeasons">
-            <h3>Todas las temporadas</h3>
+            <h3>All seasons</h3>
             <ul>
                 <div v-for="season in selectedSeries.seasons" :key="season.id" style="cursor: pointer;">
                     <div class="season-container" @click="redirectSeasonDetail(season.season_number)">
                         <img v-if="season.poster_path" :src="'https://image.tmdb.org/t/p/w500' + season.poster_path" alt="Poster de la temporada" class="season-poster">
                         <div class="season-details">
-                            <h4>Temporada {{ season.season_number }} ({{ season.air_date.split('-')[0] }})</h4>
-                            <p><strong>Calificación:</strong> {{ season.vote_average.toFixed(1) }} / 10</p>
-                            <p><strong>Año de lanzamiento:</strong> {{ season.air_date.split('-')[0] }}</p>
-                            <p><strong>Número de episodios:</strong> {{ season.episode_count }}</p>
+                            <h4>Season {{ season.season_number }} ({{ season.air_date.split('-')[0] }})</h4>
+                            <p><strong>Rate:</strong> {{ season.vote_average.toFixed(1) }} / 10</p>
+                            <p><strong>Year release:</strong> {{ season.air_date.split('-')[0] }}</p>
+                            <p><strong>Episodes:</strong> {{ season.episode_count }}</p>
                             <p><strong>Sinopsis:</strong> {{ season.overview || 'No hay sinopsis disponible.' }}</p>
                         </div>
                     </div>
                 </div>
             </ul>
-            <p @click="toggleAllSeasons" style="cursor: pointer; color: blue;">Ocultar temporadas</p>
+            <p @click="toggleAllSeasons" style="cursor: pointer; color: blue;">Hide Seasons</p>
         </div>
 
         <div class="trailer" v-if="trailer">
@@ -127,7 +127,7 @@
         </div>
 
         <div class="recommendations" v-if="recommendations.length">
-            <h2>Recomendaciones</h2>
+            <h2>Recommendations</h2>
             <div class="movies">
                 <div v-for="(recommendation, index) in recommendations" :key="recommendation.id" class="movie" @click="getSeriesDetails(recommendation.id)">
                     <img :src="'https://image.tmdb.org/t/p/w500' + recommendation.poster_path" alt="Poster de recomendación">

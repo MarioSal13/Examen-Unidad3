@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle Temporada</title>
+    <title>Season Details</title>
     <link rel="stylesheet" href="../style/DetailSeason.css">
     <link rel="stylesheet" href="../NavBar/nav.css">
 </head>
@@ -26,35 +26,35 @@
         </nav>
 
         <div v-if="selectedSeason">
-            <h2>Detalles de la temporada</h2>
-            <p><strong>Temporada:</strong> {{ selectedSeason.name }} ({{ selectedSeason.air_date }})</p>
-            <p><strong>Numero de episodios:</strong> {{ selectedSeason.episodes.length }}</p>
+            <h2>Season Details</h2>
+            <p><strong>Season:</strong> {{ selectedSeason.name }} ({{ selectedSeason.air_date }})</p>
+            <p><strong>Number of episodes:</strong> {{ selectedSeason.episodes.length }}</p>
 
             <!-- Episodes -->
-            <h3>Episodios</h3>
+            <h3>Episodes</h3>
             <div v-for="episode in selectedSeason.episodes" :key="episode.id" class="episode">
                 <img :src="'https://image.tmdb.org/t/p/w500' + episode.still_path" :style="{ width: '150px'}">
-                <p><strong>Episodio {{ episode.episode_number }}:</strong> {{ episode.name }} </p>
-                <p><strong>Sinopsis:</strong> {{ episode.overview }} </p>
+                <p><strong>Episode {{ episode.episode_number }}:</strong> {{ episode.name }} </p>
+                <p><strong>Synopsis:</strong> {{ episode.overview }} </p>
                 <p><strong>Rating:</strong> {{ episode.vote_average.toFixed(1) }}</p>
-                <p><strong>Fecha de estreno:</strong> {{ episode.air_date }}</p>
-                <p><strong>Duración:</strong> {{ episode.runtime }} minutos</p>
+                <p><strong>Air date:</strong> {{ episode.air_date }}</p>
+                <p><strong>Duration:</strong> {{ episode.runtime }} minutes</p>
 
-                <button @click="toggleGuests(episode)">Expandir Estrellas Invitadas</button>
+                <button @click="toggleGuests(episode)">Expand Guest Stars</button>
                 <div v-if="episode.showGuests" class="guest-stars">
-                    <h4>Estrellas Invitadas</h4>
+                    <h4>Guest Stars</h4>
                     <div class="guest-list">
                         <div v-for="guest in episode.guest_stars" :key="guest.id" class="guest-item">
-                            <img :src="guest.profile_path ? 'https://image.tmdb.org/t/p/w500' + guest.profile_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" alt="Foto del actor" class="guest-image">
+                            <img :src="guest.profile_path ? 'https://image.tmdb.org/t/p/w500' + guest.profile_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" alt="Actor photo" class="guest-image">
                             <p>
-                                {{ guest.name }} como {{ guest.character }}
+                                {{ guest.name }} as {{ guest.character }}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button @click="goBack">Regresar</button>
+            <button @click="goBack">Go Back</button>
         </div>
     </div>
 
