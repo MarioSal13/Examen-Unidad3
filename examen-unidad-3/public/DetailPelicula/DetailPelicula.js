@@ -96,6 +96,13 @@ createApp({
             window.location.href = `../CategoryDetail/genre.html?id=${genre.id}`;
         };
 
+        const cerrarSesion = () => {
+            sessionStorage.removeItem('Usuario');
+            sessionStorage.removeItem('session_id');
+            sessionStorage.removeItem('account_id');
+            window.location.href = '../login.html';
+        };
+
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
@@ -124,7 +131,8 @@ createApp({
             goBack,
             goKeyword,
             goGenre,
-            irPelicula
+            irPelicula,
+            cerrarSesion
         };
     }
 }).mount('#app');

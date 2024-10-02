@@ -5,10 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
     <link rel="stylesheet" href="../style/homeStyle.css">
+    <link rel="stylesheet" href="../NavBar/nav.css">
     <title>Pelicula</title>
 </head>
 <body>
     <div id="app">
+        <nav>
+            <div class="logo">
+                <a href="home.html">
+                    <img src="https://www.pngall.com/wp-content/uploads/13/Movie-PNG-Image.png" alt="ReelFlix Logo">
+                    <span>ReelFlix</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a  @click="cerrarSesion">Log out</a></li>
+            </ul>
+        </nav>
         <div v-if="selectedMovie">
             <div class="botoneskeywords">
                 <button @click="goBack"> <---- </button>

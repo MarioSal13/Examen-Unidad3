@@ -83,6 +83,13 @@ createApp({
                 fetchResults();
             }
         };
+        const cerrarSesion = () => {
+            sessionStorage.removeItem('Usuario');
+            sessionStorage.removeItem('session_id');
+            sessionStorage.removeItem('account_id');
+            window.location.href = '../login.html';
+        };
+
 
         onMounted(() => {
             fetchGenreName();
@@ -99,7 +106,8 @@ createApp({
             loadMoreResults,
             currentPage,
             totalPages,
-            totalResults
+            totalResults,
+            cerrarSesion
         };
     },
 }).mount('#app');
