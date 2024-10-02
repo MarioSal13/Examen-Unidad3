@@ -61,26 +61,86 @@
                 
             </div>
 
-            <h2>Known For:</h2>
-            <div v-if="knownForMovies.length">
-                <div class="movies">
-                    <div class="movie" v-for="movie in knownForMovies" :key="movie.credit_id">
-                        <img 
-                            :src="movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" 
-                            :alt="movie.title"
-                            @click="irPelicula(movie)"
-                        >
-                        <p><strong>{{ movie.title }}</strong></p>
+            
+            <div style="padding-left: 5vw; padding-right: 2vw;">
+                <h2>Known For:</h2>
+                <div v-if="knownForMovies.length">
+                    <div class="movies">
+                        <div class="movie" v-for="movie in knownForMovies" :key="movie.id">
+                            <img 
+                                :src="movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" 
+                                :alt="movie.title"
+                                @click="irPelicula(movie)"
+                            >
+                            <p><strong>{{ movie.title }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            
+                <h2>Acting</h2>
+                <div v-if="actingRoles.length">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left; padding: 8px; border-bottom: 2px solid #ddd;">Title</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 2px solid #ddd;">Release Date</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 2px solid #ddd;">Character</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(role, index) in actingRoles.slice(0, displayedRoles)" :key="role.credit_id">
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                    <strong>{{ role.title }}</strong>
+                                </td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                    {{ role.release_date ? role.release_date.split('-')[0] : 'N/A' }}
+                                </td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                    <em>{{ role.character }}</em>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="botoneskeywords">
+                        <button @click="displayedRoles += 10" v-if="displayedRoles < actingRoles.length" style="margin-top: 10px;">
+                            Ver Más
+                        </button>
+                    </div>
+                </div>
+                
+                <div v-for="(credits, department) in crewByDepartment" :key="department">
+                    <h3>{{ department }}</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left; padding: 8px; border-bottom: 2px solid #ddd;">Title</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 2px solid #ddd;">Release Date</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 2px solid #ddd;">Job</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(credit, index) in credits.slice(0, crewDisplayCount[department])" :key="credit.credit_id">
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                    <strong>{{ credit.title }}</strong>
+                                </td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                    {{ credit.release_date ? credit.release_date.split('-')[0] : 'N/A' }}
+                                </td>
+                                <td style="padding: 8px; border-bottom: 1px solid #ddd;">
+                                    <em>{{ credit.job }}</em>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="botoneskeywords">
+                        <button @click="crewDisplayCount[department] += 10" v-if="crewDisplayCount[department] < credits.length" style="margin-top: 10px;">
+                            Ver Más
+                        </button>
                     </div>
                 </div>
             </div>
-
-            <h2>Acting</h2>
-            <div class="credits">
-                <div v-for="credit in actingCredits" :key="credit.id">
-                    <p>{{ credit.name }} ({{ credit.episode_count }} episodes) as {{ credit.character }}</p>
-                </div>
-            </div>
+            
+            
             
         </div>
     </div> 

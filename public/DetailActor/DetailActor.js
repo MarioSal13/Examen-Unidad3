@@ -4,11 +4,14 @@ createApp({
     setup() {
         const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNTU2OTBkZjg3ZGQ4YjQ1ZmQ0OGM2MjEzNzgzMjAxMiIsIm5iZiI6MTcyNzU3NTA0Mi4zMDg0NDYsInN1YiI6IjY2ZjJmNmRjMDIyMDhjNjdjODhkOWJjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AeGm_NWqjLKptJznk1e5rGNSPdNkaxJZB6EBkPYB_Mc";
         const selectedActor = ref({});
-        const knownForMovies = ref({});
-        const actingRoles = ref({});
+        const knownForMovies = ref([]);
+        const actingRoles = ref([]);
         const userRating = ref(0);
         const recommendations = ref([]);
         const showMore = ref(false);
+        const displayedRoles = ref(5);
+        const crewByDepartment = ref({});
+        const crewDisplayCount = ref({});
 
         const fetchData = async (url) => {
             try {
@@ -48,12 +51,30 @@ createApp({
                     id: credit.id
                 }));
 
-                // You can adjust the number of acting roles you want to display
                 actingRoles.value = data.movie_credits.cast.map(credit => ({
                     title: credit.title,
                     character: credit.character,
+                    release_date: credit.release_date,
                     episode_count: credit.episode_count || "N/A" // For TV shows
                 }));
+
+                // Obtén créditos del crew
+                const crewCredits = data.movie_credits.crew.map(credit => ({
+                    title: credit.title,
+                    release_date: credit.release_date,
+                    department: credit.department,
+                    job: credit.job
+                }));
+
+                // Agrupar los créditos del crew por departamento
+                crewCredits.forEach(credit => {
+                    if (!crewByDepartment.value[credit.department]) {
+                        crewByDepartment.value[credit.department] = [];
+                        crewDisplayCount.value[credit.department] = 5; // Inicializa la cantidad a mostrar
+                    }
+                    crewByDepartment.value[credit.department].push(credit);
+                });
+
             }
         };
 
@@ -89,15 +110,18 @@ createApp({
 
         return {
             selectedActor,
-            cerrarSesion,
             knownForMovies,
+            actingRoles,
             userRating,
-            showMore,
             recommendations,
+            showMore,
+            displayedRoles,
+            crewByDepartment,
+            crewDisplayCount,
+            fetchData,
             getActorDetails,
-            goKeyword,
-            goGenre,
-            irPelicula
+            irPelicula,
+            cerrarSesion
         };
     }
 }).mount('#app');
