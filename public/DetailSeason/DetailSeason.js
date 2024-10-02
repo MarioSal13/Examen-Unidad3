@@ -15,7 +15,6 @@ createApp({
             .then(res => res.json())
             .then(data => {
                 selectedSeason.value = data;
-                // Inicializa la propiedad showGuests en cada episodio
                 selectedSeason.value.episodes.forEach(episode => {
                     episode.showGuests = false;
                 });
@@ -35,12 +34,6 @@ createApp({
             const urlParams = new URLSearchParams(window.location.search);
             const seriesId = urlParams.get('seriesId');
             const seasonNumber = urlParams.get('seasonNumber');
-
-            //TODO eliminar esto
-            console.log('URL completa:', window.location.href);
-            console.log('Parámetros de URL:', window.location.search);
-            console.log('ID serieId:', seriesId);
-            console.log('ID seasonN:', seasonNumber);
 
             if(seriesId && seasonNumber) {
                 getSeasonDetails(seriesId, seasonNumber);

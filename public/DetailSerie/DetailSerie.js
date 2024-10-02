@@ -31,7 +31,6 @@ createApp({
                 keywords.value = data.keywords?.results || [];
                 trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
                 recommendations.value = data.recommendations?.results || [];
-                console.log(data.seasons);
                 if (data.seasons.length > 0) {
                     const lastSeason = data.seasons[data.seasons.length - 1];
                     const seasonToFetch = lastSeason.season_number >= 0 ? lastSeason.season_number : 0;
@@ -124,9 +123,7 @@ createApp({
 
         // redirect to SeasonDetail
         const redirectSeasonDetail = (seasonNumber) => {
-            console.log('redirect: a', seasonNumber);
             const seriesId = selectedSeries.value.id;
-            console.log('seriesId', seriesId);
             if (seriesId !== undefined && seasonNumber >= 0) {
                 window.location.href = `../DetailSeason/DetailSeason.html?seriesId=${seriesId}&seasonNumber=${seasonNumber}`;
             }
