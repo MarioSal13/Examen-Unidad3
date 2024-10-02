@@ -14,7 +14,6 @@ createApp({
         const recommendations = ref([]);
         const showMore = ref(false);
 
-        // Fetch data from a given URL
         const fetchData = async (url) => {
             try {
                 const response = await fetch(url, {
@@ -31,7 +30,6 @@ createApp({
             }
         };
 
-        // Get movie details
         const getMovieDetails = async (movieId) => {
             const url = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=credits,videos,keywords,recommendations`;
             const data = await fetchData(url);
@@ -56,7 +54,6 @@ createApp({
             }
         };
 
-        // Toggle favorite status
         const toggleFavorite = async () => {
        
             const options = {
@@ -76,15 +73,13 @@ createApp({
                     throw new Error(`Error al actualizar estado de favorito: ${response.status}`);
                 }
         
-                const result = await response.json(); // Procesar la respuesta JSON
-                console.log(result); // Opcional: log de la respuesta
-        
-                // Actualizar isFavorite solo si la respuesta es exitosa
-                isFavorite.value = !isFavorite.value; // Alternar el estado de favorito
+                const result = await response.json();
+                console.log(result);
+
+                isFavorite.value = !isFavorite.value;
         
             } catch (err) {
-                console.error(err); // Manejo de errores
-                // Aquí puedes mostrar un modal o un mensaje de error si lo deseas
+                console.error(err);
             }
 
         };
@@ -101,7 +96,6 @@ createApp({
             window.location.href = `../CategoryDetail/genre.html?id=${genre.id}`;
         };
 
-        // On component mount
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
