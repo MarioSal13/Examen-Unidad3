@@ -6,7 +6,6 @@ body {
 }
 
 #app {
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -109,4 +108,8 @@ button {
 
 button:hover {
     background-color: #cc0000; 
+}
+
+#content{
+    padding: 50px;
 }

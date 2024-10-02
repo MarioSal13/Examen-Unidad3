@@ -7,44 +7,59 @@
     <title>Keyword</title>
     <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
     <link rel="stylesheet" href="../style/keywordGenre.css">
+    <link rel="stylesheet" href="../NavBar/nav.css">
 </head>
 
 <body>
     <div id="app">
-        <header>
-            <h1>{{ keywordName }}</h1>
-            <h2>{{totalResults}} Results</h2>
-        </header>
-
-        <section id="filter">
-            <label for="type">Type:</label>
-            <select v-model="type">
-                <option value="movie">Movies</option>
-                <option value="tv">Series</option>
-            </select>
-
-            <label for="order">Order:</label>
-            <select v-model="sortBy">
-                <option value="popularity.desc">Fallling Popularity</option>
-                <option value="popularity.asc">Upward Popularity</option>
-            </select>
-        </section>
-
-        <section id="results">
-            <div class="result" @click="showDetails(movie)" v-for="movie in movies" :key="movie.id" >
-                <img :src="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" 
-                :alt="movie.title || movie.name" 
-                @click="showDetails(movie)">
-                <div id="result-details">
-                    <a @click="showDetails(movie)">{{ movie.title || movie.name }}</a>
-                    <p>{{movie.release_date}}</p>
-                    <p>{{movie.overview}}</p>
-                </div>
-               
+        
+        <nav>
+            <div class="logo">
+                <a href="home.html">
+                    <img src="https://www.pngall.com/wp-content/uploads/13/Movie-PNG-Image.png" alt="ReelFlix Logo">
+                    <span>ReelFlix</span>
+                </a>
             </div>
-            <button v-if="currentPage < totalPages" @click="loadMoreResults">Mostrar más</button>
-
-        </section>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a  @click="cerrarSesion">Log out</a></li>
+            </ul>
+        </nav>
+        <div id="content">
+            <header>
+                <h1>{{ keywordName }}</h1>
+                <h2>{{totalResults}} Results</h2>
+            </header>
+    
+            <section id="filter">
+                <label for="type">Type:</label>
+                <select v-model="type">
+                    <option value="movie">Movies</option>
+                    <option value="tv">Series</option>
+                </select>
+    
+                <label for="order">Order:</label>
+                <select v-model="sortBy">
+                    <option value="popularity.desc">Fallling Popularity</option>
+                    <option value="popularity.asc">Upward Popularity</option>
+                </select>
+            </section>
+    
+            <section id="results">
+                <div class="result" @click="showDetails(movie)" v-for="movie in movies" :key="movie.id">
+                    <img :src="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'"
+                        :alt="movie.title || movie.name" @click="showDetails(movie)">
+                    <div id="result-details">
+                        <a @click="showDetails(movie)">{{ movie.title || movie.name }}</a>
+                        <p>{{movie.release_date}}</p>
+                        <p>{{movie.overview}}</p>
+                    </div>
+    
+                </div>
+                <button v-if="currentPage < totalPages" @click="loadMoreResults">Mostrar más</button>
+    
+            </section>
+        </div>
 
     </div>
 
