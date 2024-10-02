@@ -94,6 +94,18 @@ h1 {
     text-align: center;
 }
 
+/*Keywords*/
+.botoneskeywords button {
+    background-color: #e50914;
+    font-size: 1.2rem;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0.5vw;
+    margin-right: 0.5vw;
+    transition: background-color 0.3s ease;
+}
 
 .movies {
     display: flex;
