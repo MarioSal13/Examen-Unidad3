@@ -32,7 +32,6 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          cache-dependency-path: './examen-unidad-3/package-lock.json'
           node-version: 20
           cache: 'npm'
       - name: Install dependencies
@@ -45,7 +44,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
-          path: './examen-unidad-3/dist'
+          path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
