@@ -70,11 +70,6 @@ div {
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-    transition: transform 0.3s ease;
-}
-
-div:hover {
-    transform: scale(1.02);
 }
 
 img {
@@ -96,7 +91,6 @@ li {
     margin: 5px 0;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     h2 {
         font-size: 2rem;
