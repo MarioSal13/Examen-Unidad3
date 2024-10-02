@@ -46,6 +46,7 @@ jobs:
         with:
           # Upload dist folder
           path: './examen-unidad-3/dist'
+          cache-dependency-path: './examen-unidad-3/package-lock.json'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
