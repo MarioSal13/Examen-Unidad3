@@ -10,7 +10,9 @@
 <body>
     <div id="app">
         <div v-if="selectedMovie">
-
+            <div class="botoneskeywords">
+                <button @click="goBack"> <---- </button>
+            </div>
             <h1>{{ selectedMovie.title }}</h1>
 
             <div class="movie-info">
@@ -50,7 +52,9 @@
                     <div class="botoneskeywords">
                         <p>
                             <strong>Favorite: </strong>
-                            <button @click="toggleFavorite">{{ isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}</button>
+                            <button @click="toggleFavorite">
+                                {{ isFavorite ? 'Remove from Favorites' : 'Add to Favorites' }}
+                            </button>
                         </p>
                     </div>
                     
@@ -89,7 +93,6 @@
                         frameborder="0" 
                         allowfullscreen>
                     </iframe>
-                    <h2>Aqui iria los datos de quienes hicieron la pelicula</h2>
                 </div>
             </div>
             
@@ -109,7 +112,7 @@
             
             
 
-            <button @click="goBack">Back to Home</button>
+            
         </div>
     </div> 
 

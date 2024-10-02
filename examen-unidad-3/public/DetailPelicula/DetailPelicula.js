@@ -50,7 +50,10 @@ createApp({
                 trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
                 recommendations.value = data.recommendations?.results || [];
 
-                isFavorite.value = data.account_states?.favorite
+                const accountStatesUrl = `https://api.themoviedb.org/3/movie/${movieId}/account_states?session_id=${session_id}`;
+                const accountStatesData = await fetchData(accountStatesUrl);
+
+                isFavorite.value = accountStatesData?.favorite || false;
             }
         };
 
@@ -65,12 +68,26 @@ createApp({
                   Authorization: `Bearer ${API_KEY}`
                 },
                 body: JSON.stringify({media_type: 'movie', media_id: selectedMovie.value.id, favorite: !isFavorite.value})
-              };
+            };
               
-              fetch(`https://api.themoviedb.org/3/account/${account_id}/favorite?session_id=${session_id}`, options)
-                .then(response => response.json())
-                .then(response => console.log(response))
-                .catch(err => console.error(err));
+            try {
+                const response = await fetch(`https://api.themoviedb.org/3/account/${account_id}/favorite?session_id=${session_id}`, options);
+        
+                if (!response.ok) {
+                    throw new Error(`Error al actualizar estado de favorito: ${response.status}`);
+                }
+        
+                const result = await response.json(); // Procesar la respuesta JSON
+                console.log(result); // Opcional: log de la respuesta
+        
+                // Actualizar isFavorite solo si la respuesta es exitosa
+                isFavorite.value = !isFavorite.value; // Alternar el estado de favorito
+        
+            } catch (err) {
+                console.error(err); // Manejo de errores
+                // Aquí puedes mostrar un modal o un mensaje de error si lo deseas
+            }
+
         };
 
         
