@@ -23,9 +23,6 @@
             </ul>
         </nav>
         <div v-if="selectedMovie">
-            <div class="botoneskeywords">
-                <button @click="goBack"> <---- </button>
-            </div>
             <h1>{{ selectedMovie.title }}</h1>
 
             <div class="movie-info">
@@ -88,7 +85,7 @@
             <div v-if="cast.length"></div>
                 <div class="movies">
                     <div class="movie" v-for="actor in cast" :key="actor.id">
-                        <img :src="actor.profile_path ? `https://image.tmdb.org/t/p/w200${actor.profile_path}` : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" :alt="actor.name">
+                        <img :src="actor.profile_path ? `https://image.tmdb.org/t/p/w200${actor.profile_path}` : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" :alt="actor.name" @click="goActor(actor)">
                         <p><h4>{{ actor.name }}</h4> {{ actor.character }} </p>
                     </div>
                 </div>

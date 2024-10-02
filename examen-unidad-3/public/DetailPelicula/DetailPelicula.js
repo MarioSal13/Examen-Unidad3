@@ -42,7 +42,7 @@ createApp({
                 selectedMovie.value.budget = data.budget;
                 selectedMovie.value.revenue = data.revenue;
 
-                cast.value = data.credits?.cast?.slice(0, 10) || [];
+                cast.value = data.credits?.cast || [];
                 keywords.value = data.keywords?.keywords || [];
                 trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
                 recommendations.value = data.recommendations?.results || [];
@@ -96,6 +96,11 @@ createApp({
             window.location.href = `../CategoryDetail/genre.html?id=${genre.id}`;
         };
 
+        const goActor = (actor) => {
+            window.location.href = `../DetailActor/DetailActor.html?id=${actor.id}`;
+        };
+
+
         const cerrarSesion = () => {
             sessionStorage.removeItem('Usuario');
             sessionStorage.removeItem('session_id');
@@ -131,6 +136,7 @@ createApp({
             goBack,
             goKeyword,
             goGenre,
+            goActor,
             irPelicula,
             cerrarSesion
         };

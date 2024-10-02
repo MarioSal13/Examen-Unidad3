@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../style/homeStyle.css">
+    <link rel="stylesheet" href="../NavBar/nav.css">
+    <title>Actor</title>
+</head>
+<body>
+    <div id="app">
+        <nav>
+            <div class="logo">
+                <a href="home.html">
+                    <img src="https://www.pngall.com/wp-content/uploads/13/Movie-PNG-Image.png" alt="ReelFlix Logo">
+                    <span>ReelFlix</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a  @click="cerrarSesion">Log out</a></li>
+            </ul>
+        </nav>
+        <div>
+            <h1>{{ selectedActor.name }}</h1>
+
+            <div class="actor-info">
+
+                <img v-if="selectedActor.profile_path" 
+                    :src="'https://image.tmdb.org/t/p/w500' + selectedActor.profile_path" 
+                    :style="{ width: '300px', marginLeft: '10vw', marginRight: '5vw' }"
+                >
+
+                <div class="actor-details">
+                    <p><strong>Biography: </strong>{{ selectedActor.biography }}</p>
+                    <p><strong>Gender: </strong>{{ selectedActor.gender === 1 ? 'Female' : 'Male' }}</p>
+                    <p><strong>Birthday: </strong>{{ selectedActor.birthday }}</p>
+                    <p><strong>Place of Birth: </strong>{{ selectedActor.place_of_birth }}</p>
+                    <p><strong>Also Known As: </strong>
+                        <ul>
+                            <li v-for="(alias, index) in selectedActor.also_known_as" :key="index">
+                                {{ alias }}
+                            </li>
+                        </ul>
+                    </p>
+
+                    <h2>Known For:</h2>
+                    <div class="movies">
+                        <div class="movie" v-for="movie in knownForMovies" :key="movie.id">
+                            <img :src="movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" :alt="movie.title">
+                            <p><strong>{{ movie.title }}</strong> ({{ movie.release_date ? movie.release_date.split('-')[0] : 'N/A' }})</p>
+                            <p><em>{{ movie.character }}</em></p>
+                        </div>
+                    </div>
+
+                    <h2>Acting Credits:</h2>
+                    <div class="credits">
+                        <div v-for="credit in actingCredits" :key="credit.id">
+                            <p>{{ credit.name }} ({{ credit.episode_count }} episodes) as {{ credit.character }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <script src="DetailActor.js"></script>
+</body>
+</html>
