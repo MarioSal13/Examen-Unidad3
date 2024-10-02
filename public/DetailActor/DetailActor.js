@@ -55,10 +55,9 @@ createApp({
                     title: credit.title,
                     character: credit.character,
                     release_date: credit.release_date,
-                    episode_count: credit.episode_count || "N/A" // For TV shows
+                    episode_count: credit.episode_count || "N/A"
                 }));
 
-                // Obtén créditos del crew
                 const crewCredits = data.movie_credits.crew.map(credit => ({
                     title: credit.title,
                     release_date: credit.release_date,
@@ -66,11 +65,10 @@ createApp({
                     job: credit.job
                 }));
 
-                // Agrupar los créditos del crew por departamento
                 crewCredits.forEach(credit => {
                     if (!crewByDepartment.value[credit.department]) {
                         crewByDepartment.value[credit.department] = [];
-                        crewDisplayCount.value[credit.department] = 5; // Inicializa la cantidad a mostrar
+                        crewDisplayCount.value[credit.department] = 5;
                     }
                     crewByDepartment.value[credit.department].push(credit);
                 });
@@ -78,15 +76,6 @@ createApp({
             }
         };
 
-        const goKeyword = (keyword) => {
-            window.location.href = `../KeywordDetail/keyword.html?id=${keyword.id}`;
-        };
-
-        const goGenre = (genre) => {
-            window.location.href = `../CategoryDetail/genre.html?id=${genre.id}`;
-        };
-
-        // On component mount
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
