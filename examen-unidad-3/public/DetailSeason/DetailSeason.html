@@ -5,9 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle Temporada</title>
     <link rel="stylesheet" href="../style/DetailSeason.css">
+    <link rel="stylesheet" href="../NavBar/nav.css">
 </head>
+
 <body>
+
     <div id="app">
+
+        <nav>
+            <p class="logo">
+                <a href="home.html">
+                    <img src="https://www.pngall.com/wp-content/uploads/13/Movie-PNG-Image.png" alt="ReelFlix Logo">
+                    <span>ReelFlix</span>
+                </a>
+            </p>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a  @click="cerrarSesion">Log out</a></li>
+            </ul>
+        </nav>
+
         <div v-if="selectedSeason">
             <h2>Detalles de la temporada</h2>
             <p><strong>Temporada:</strong> {{ selectedSeason.name }} ({{ selectedSeason.air_date }})</p>

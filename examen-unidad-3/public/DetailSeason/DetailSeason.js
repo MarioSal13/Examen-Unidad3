@@ -41,9 +41,17 @@ createApp({
             }
         });
 
+        const cerrarSesion = () => {
+            sessionStorage.removeItem('Usuario');
+            sessionStorage.removeItem('session_id');
+            sessionStorage.removeItem('account_id');
+            window.location.href = '../login.html';
+        };
+
         return {
             selectedSeason,
-            goBack
+            goBack,
+            cerrarSesion
         }
     }
 }).mount('#app');

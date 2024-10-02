@@ -7,11 +7,7 @@ body {
     color: #ffffff;
 }
 
-#app {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+
 
 h2 {
     font-size: 2.5rem;
@@ -65,12 +61,7 @@ button:hover {
     background-color: #b80610;
 }
 
-div {
-    background-color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
+
 
 img {
     width: 150px;
@@ -90,6 +81,7 @@ li {
     font-size: 1rem;
     margin: 5px 0;
 }
+
 
 @media (max-width: 768px) {
     h2 {
