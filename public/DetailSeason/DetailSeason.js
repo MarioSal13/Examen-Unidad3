@@ -15,8 +15,16 @@ createApp({
             .then(res => res.json())
             .then(data => {
                 selectedSeason.value = data;
+                // Inicializa la propiedad showGuests en cada episodio
+                selectedSeason.value.episodes.forEach(episode => {
+                    episode.showGuests = false;
+                });
             })
             .catch(error => console.log('Error al obtener los detalles de la temporada:', error));
+        };
+
+        const toggleGuests = (episode) => {
+            episode.showGuests = !episode.showGuests;
         };
 
         const goBack = () => {
@@ -51,7 +59,8 @@ createApp({
         return {
             selectedSeason,
             goBack,
-            cerrarSesion
+            cerrarSesion,
+            toggleGuests
         }
     }
 }).mount('#app');

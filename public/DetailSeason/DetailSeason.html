@@ -14,13 +14,13 @@
 
         <nav>
             <p class="logo">
-                <a href="home.html">
+                <a href="../home.html">
                     <img src="https://www.pngall.com/wp-content/uploads/13/Movie-PNG-Image.png" alt="ReelFlix Logo">
                     <span>ReelFlix</span>
                 </a>
             </p>
             <ul class="nav-links">
-                <li><a href="home.html">Home</a></li>
+                <li><a href="../home.html">Home</a></li>
                 <li><a  @click="cerrarSesion">Log out</a></li>
             </ul>
         </nav>
@@ -32,17 +32,26 @@
 
             <!-- Episodes -->
             <h3>Episodios</h3>
-            <div v-for="episode in selectedSeason.episodes" :key="episode.id">
+            <div v-for="episode in selectedSeason.episodes" :key="episode.id" class="episode">
                 <img :src="'https://image.tmdb.org/t/p/w500' + episode.still_path" :style="{ width: '150px'}">
                 <p><strong>Episodio {{ episode.episode_number }}:</strong> {{ episode.name }} </p>
                 <p><strong>Sinopsis:</strong> {{ episode.overview }} </p>
                 <p><strong>Rating:</strong> {{ episode.vote_average.toFixed(1) }}</p>
+                <p><strong>Fecha de estreno:</strong> {{ episode.air_date }}</p>
+                <p><strong>Duración:</strong> {{ episode.runtime }} minutos</p>
 
-                <!-- stars -->
-                <h4>Estrellas Invitadas</h4>
-                <ul>
-                    <li v-for="guest in episode.guest_stars" :key="guest.id">{{ guest.name }} como {{ guest.character }}</li>
-                </ul>
+                <button @click="toggleGuests(episode)">Expandir Estrellas Invitadas</button>
+                <div v-if="episode.showGuests" class="guest-stars">
+                    <h4>Estrellas Invitadas</h4>
+                    <div class="guest-list">
+                        <div v-for="guest in episode.guest_stars" :key="guest.id" class="guest-item">
+                            <img :src="guest.profile_path ? 'https://image.tmdb.org/t/p/w500' + guest.profile_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" alt="Foto del actor" class="guest-image">
+                            <p>
+                                {{ guest.name }} como {{ guest.character }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <button @click="goBack">Regresar</button>
