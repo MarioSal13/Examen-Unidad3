@@ -205,7 +205,6 @@ h1 {
   .movie-info {
     display: flex;
     align-items: flex-start;
-    margin: 20px;
 }
 
 .movie-info img {
@@ -249,4 +248,15 @@ h1 {
 
 .season-description p {
     margin-bottom: 10px;
+}
+
+.serie-info {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.serie-facts {
+    max-width: 30%;
+    margin-left: 5px;
 }

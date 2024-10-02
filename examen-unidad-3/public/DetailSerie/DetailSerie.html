@@ -32,8 +32,22 @@
 
                     <button @click="toggleFavorite">{{ isFavorite ? 'Eliminar de favoritos' : 'Añadir a Favoritos' }}</button>
                 </div>
+            
+                <div class="serie-facts">
+                    <h3>Hechos</h3>
+                    <p><strong>Nombre Original:</strong> {{ selectedSeries.original_name }}</p>
+                    <p><strong>Estado:</strong> {{ selectedSeries.status }}</p>
+                    <p><strong>Canal:</strong>
+                        <div v-for="network in selectedSeries.networks" :key="network.id">
+                            {{ network.name }}
+                        </div>
+                    </p>
+                    <p><strong>Tipo:</strong> {{ selectedSeries.type }}</p>
+                    <p><strong>Idioma Original:</strong> {{ selectedSeries.original_language }}</p>
+                </div>
             </div>
         </div>
+
 
         <div class="botoneskeywords">
             <h3>Palabras clave</h3>
