@@ -50,11 +50,13 @@
             </div>
         </div>
 
-        <div class="season-info" v-if="selectedSeason && selectedSeason.poster_path">
+        <div class="season-info" v-if="!showAllSeasons && selectedSeason && selectedSeason.poster_path">
             <div class="season-details">
                 <img :src="'https://image.tmdb.org/t/p/w500' + selectedSeason.poster_path" alt="Poster de la temporada" class="season-poster">
                 <div class="season-description">
-                    <h2>Temporada {{ selectedSeason.season_number }}</h2>
+                    <h2 @click="redirectSeasonDetail(selectedSeason.season_number)" style="cursor: pointer; color: blue;">
+                        Temporada {{ selectedSeason.season_number }}
+                    </h2>
                     <p><strong>Calificación:</strong> {{ selectedSeason.vote_average.toFixed(1) }} / 10</p>
                     <p><strong>Año de estreno:</strong> {{ selectedSeason.air_date.split('-')[0] }}</p>
                     <p><strong>Cantidad de episodios:</strong> {{ selectedSeason.episodes.length }}</p>
@@ -62,9 +64,28 @@
                     <p><strong>Último episodio lanzado:</strong> {{ selectedSeason.episodes[selectedSeason.episodes.length - 1].name }}</p>
                     <p><strong>Fecha de lanzamiento:</strong> {{ selectedSeason.episodes[selectedSeason.episodes.length - 1].air_date }}</p>
                     <p v-if="selectedSeason.episodes[selectedSeason.episodes.length - 1].season_finale">Final de temporada</p>
-                    <p @click="redirectSeasonDetail(selectedSeason.season_number)">Ver todas las temporadas</p>
+                    <p @click="toggleAllSeasons" style="cursor: pointer; color: blue;">Ver todas las Temporadas</p>
                 </div>
             </div>
+        </div>
+
+        <div v-if="showAllSeasons">
+            <h3>Todas las temporadas</h3>
+            <ul>
+                <div v-for="season in selectedSeries.seasons" :key="season.id" style="cursor: pointer;">
+                    <div class="season-container" @click="redirectSeasonDetail(season.season_number)">
+                        <img v-if="season.poster_path" :src="'https://image.tmdb.org/t/p/w500' + season.poster_path" alt="Poster de la temporada" class="season-poster">
+                        <div class="season-details">
+                            <h4>Temporada {{ season.season_number }} ({{ season.air_date.split('-')[0] }})</h4>
+                            <p><strong>Calificación:</strong> {{ season.vote_average.toFixed(1) }} / 10</p>
+                            <p><strong>Año de lanzamiento:</strong> {{ season.air_date.split('-')[0] }}</p>
+                            <p><strong>Número de episodios:</strong> {{ season.episode_count }}</p>
+                            <p><strong>Sinopsis:</strong> {{ season.overview || 'No hay sinopsis disponible.' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+            <p @click="toggleAllSeasons" style="cursor: pointer; color: blue;">Ocultar temporadas</p>
         </div>
 
         <div class="trailer" v-if="trailer">

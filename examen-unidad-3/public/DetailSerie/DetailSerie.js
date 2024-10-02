@@ -15,10 +15,11 @@ createApp({
         const trailer = ref(null);
         const recommendations = ref([]);
         const showFullCast = ref(false);
+        const showAllSeasons = ref(false);
 
         // Obtains details of the series
         const getSeriesDetails = (seriesId) => {
-            fetch(`https://api.themoviedb.org/3/tv/${seriesId}?append_to_response=credits,videos,keywords,recommendations`, {
+            fetch(`https://api.themoviedb.org/3/tv/${seriesId}?append_to_response=credits,videos,keywords,recommendations,seasons`, {
                 headers: {
                     'Authorization': `Bearer ${API_KEY}`
                 }
@@ -30,7 +31,12 @@ createApp({
                 keywords.value = data.keywords?.results || [];
                 trailer.value = data.videos?.results?.find(video => video.type === 'Trailer')?.key || null;
                 recommendations.value = data.recommendations?.results || [];
-                getSeasonDetails(seriesId, 1);
+                console.log(data.seasons);
+                if (data.seasons.length > 0) {
+                    const lastSeason = data.seasons[data.seasons.length - 1];
+                    const seasonToFetch = lastSeason.season_number >= 0 ? lastSeason.season_number : 0;
+                    getSeasonDetails(seriesId, seasonToFetch);
+                }
             })
             .catch(error => console.log('Error al obtener datos', error));
         };
@@ -76,6 +82,11 @@ createApp({
             showFullCast.value = !showFullCast.value;
         };
 
+        // show all seasons
+        const toggleAllSeasons = () => {
+            showAllSeasons.value = !showAllSeasons.value;
+        }
+
         // Rate series
         const rateSeries = () => {
             fetch(`https://api.themoviedb.org/3/tv/${selectedSeries.value.id}/rating?session_id=${sessionId.value}`, {
@@ -113,8 +124,10 @@ createApp({
 
         // redirect to SeasonDetail
         const redirectSeasonDetail = (seasonNumber) => {
+            console.log('redirect: a', seasonNumber);
             const seriesId = selectedSeries.value.id;
-            if (seriesId && seasonNumber) {
+            console.log('seriesId', seriesId);
+            if (seriesId !== undefined && seasonNumber >= 0) {
                 window.location.href = `../DetailSeason/DetailSeason.html?seriesId=${seriesId}&seasonNumber=${seasonNumber}`;
             }
         }
@@ -144,12 +157,14 @@ createApp({
             trailer,
             recommendations,
             showFullCast,
+            showAllSeasons,
             getSeriesDetails,
             getSeasonDetails,
             toggleFavorite,
             rateSeries,
             deleteRating,
             redirectSeasonDetail,
+            toggleAllSeasons,
             toggleShowCast
         };
     }
