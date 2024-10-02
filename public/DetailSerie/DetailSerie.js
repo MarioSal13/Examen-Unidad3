@@ -139,6 +139,10 @@ createApp({
             window.location.href = `../CategoryDetail/genre.html?id=${genre.id}`;
         };
 
+        const goActor = (actor) => {
+            window.location.href = `../DetailActor/DetailActor.html?id=${actor.id}`;
+        };
+
         // On mount
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -182,6 +186,7 @@ createApp({
             toggleShowCast,
             goKeyword,
             goGenre,
+            goActor,
             cerrarSesion
         };
     }

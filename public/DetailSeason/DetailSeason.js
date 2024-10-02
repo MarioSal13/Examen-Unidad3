@@ -30,6 +30,10 @@ createApp({
             window.history.back();
         }
 
+        const goActor = (actor) => {
+            window.location.href = `../DetailActor/DetailActor.html?id=${actor.id}`;
+        };
+
         onMounted(() => {
             const urlParams = new URLSearchParams(window.location.search);
             const seriesId = urlParams.get('seriesId');
@@ -53,7 +57,8 @@ createApp({
             selectedSeason,
             goBack,
             cerrarSesion,
-            toggleGuests
+            toggleGuests,
+            goActor
         }
     }
 }).mount('#app');

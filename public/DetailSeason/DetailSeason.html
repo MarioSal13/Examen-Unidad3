@@ -44,7 +44,7 @@
                 <div v-if="episode.showGuests" class="guest-stars">
                     <h4>Guest Stars</h4>
                     <div class="guest-list">
-                        <div v-for="guest in episode.guest_stars" :key="guest.id" class="guest-item">
+                        <div v-for="guest in episode.guest_stars" :key="guest.id" class="guest-item" @click="goActor(guest)">
                             <img :src="guest.profile_path ? 'https://image.tmdb.org/t/p/w500' + guest.profile_path : 'https://icones.pro/wp-content/uploads/2021/06/icone-d-image-rouge.png'" alt="Actor photo" class="guest-image">
                             <p>
                                 {{ guest.name }} as {{ guest.character }}
