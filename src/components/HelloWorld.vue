@@ -7,7 +7,7 @@
 export default {
   name: 'HelloWorld',
   mounted() {
-    window.location.href = '/login.html';
+    window.location.href = './login.html';
   }
 }
 </script>

@@ -35,7 +35,7 @@ createApp({
         const checkSession = () => {
             const session = sessionStorage.getItem('Usuario');
             if (!session) {
-                window.location.href = 'login.html';
+                window.location.href = './login.html';
             }
         };
 
@@ -43,7 +43,7 @@ createApp({
             sessionStorage.removeItem('Usuario');
             sessionStorage.removeItem('session_id');
             sessionStorage.removeItem('account_id');
-            window.location.href = 'login.html';
+            window.location.href = './login.html';
         };
 
         const fetchMovies = async () => {
@@ -242,11 +242,11 @@ createApp({
         };
 
         const irSerie = (movie) =>{
-            window.location.href = `DetailSerie/DetailSerie.html?id=${movie.id}`;
+            window.location.href = `./DetailSerie/DetailSerie.html?id=${movie.id}`;
         }
 
         const irPelicula = (movie) =>{
-            window.location.href = `DetailPelicula/DetailPelicula.html?id=${movie.id}`;
+            window.location.href = `./DetailPelicula/DetailPelicula.html?id=${movie.id}`;
         }
 
         const obtenerImagenBaner = async () =>{

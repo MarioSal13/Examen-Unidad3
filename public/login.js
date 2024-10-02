@@ -12,7 +12,7 @@ createApp({
             const userSession = sessionStorage.getItem('Usuario');
             if (userSession) {
                 isLoggedIn.value = true;
-                window.location.href = '/home.html';
+                window.location.href = './home.html';
             }
         });
 
@@ -116,7 +116,7 @@ createApp({
                     // Guardar account_id en sessionStorage
                     sessionStorage.setItem('account_id', account_id);
 
-                    window.location.href = '/home.html';
+                    window.location.href = './home.html';
                 } else {
                     console.log("Credenciales inválidas.");
                 }
