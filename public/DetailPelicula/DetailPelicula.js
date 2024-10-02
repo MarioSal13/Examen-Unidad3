@@ -119,7 +119,7 @@ createApp({
         });
 
         const irPelicula = (movie) => {
-            window.location.href = `DetailPelicula.html?id=${movie.id}`;
+            window.location.href = `./DetailPelicula.html?id=${movie.id}`;
         };
 
         return {

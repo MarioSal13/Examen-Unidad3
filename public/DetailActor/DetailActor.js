@@ -7,14 +7,9 @@ createApp({
         const knownForMovies = ref({});
         const actingRoles = ref({});
         const userRating = ref(0);
-        const session_id = sessionStorage.getItem('session_id');
-        const cast = ref([]);
-        const keywords = ref([]);
-        const trailer = ref(null);
         const recommendations = ref([]);
         const showMore = ref(false);
 
-        // Fetch data from a given URL
         const fetchData = async (url) => {
             try {
                 const response = await fetch(url, {
@@ -31,7 +26,6 @@ createApp({
             }
         };
 
-        // Get actor details
         const getActorDetails = async (actorId) => {
             const url = `https://api.themoviedb.org/3/person/${actorId}?append_to_response=movie_credits`;
             const data = await fetchData(url);
@@ -39,21 +33,19 @@ createApp({
             if (data) {
                 selectedActor.value = data;
 
-                // Populate actor details
                 selectedActor.value.name = data.name;
                 selectedActor.value.biography = data.biography || "No biography available.";
                 selectedActor.value.known_for_department = data.known_for_department || "Not available";
-                selectedActor.value.known_credits = data.movie_credits.cast.length || 0; // Number of acting credits
+                selectedActor.value.known_credits = data.movie_credits.cast.length || 0; 
                 selectedActor.value.gender = data.gender === 1 ? "Female" : "Male";
                 selectedActor.value.birthday = data.birthday || "N/A";
                 selectedActor.value.place_of_birth = data.place_of_birth || "N/A";
-                selectedActor.value.also_known_as = data.also_known_as.length > 0 ? data.also_known_as.join(', ') : "N/A";
+                selectedActor.value.also_known_as = data.also_known_as || [];
 
-                // Acting roles (movies known for)
                 knownForMovies.value = data.movie_credits.cast.map(credit => ({
                     title: credit.title,
-                    character: credit.character,
-                    credit_id: credit.credit_id
+                    poster_path: credit.poster_path,
+                    id: credit.id
                 }));
 
                 // You can adjust the number of acting roles you want to display
@@ -85,16 +77,22 @@ createApp({
         });
 
         const irPelicula = (movie) => {
-            window.location.href = `DetailPelicula.html?id=${movie.id}`;
+            window.location.href = `../DetailPelicula/DetailPelicula.html?id=${movie.id}`;
+        };
+
+        const cerrarSesion = () => {
+            sessionStorage.removeItem('Usuario');
+            sessionStorage.removeItem('session_id');
+            sessionStorage.removeItem('account_id');
+            window.location.href = '../login.html';
         };
 
         return {
             selectedActor,
+            cerrarSesion,
+            knownForMovies,
             userRating,
-            cast,
-            keywords,
             showMore,
-            trailer,
             recommendations,
             getActorDetails,
             goKeyword,
